@@ -1,0 +1,12 @@
+# Keep cross-platform CI inputs consistent; Windows launchers use native CRLF.
+* text=auto
+*.c text eol=lf
+*.h text eol=lf
+*.S text eol=lf
+*.py text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.sh text eol=lf
+*.cmd text eol=crlf
+*.exe binary
+*.zip binary
