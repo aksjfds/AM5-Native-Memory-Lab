@@ -1,0 +1,24 @@
+name: Actions startup check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/actions-health.yml'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  startup:
+    name: Verify GitHub can start a runner
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    steps:
+      - name: Confirm runner execution without checkout or external actions
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf 'Runner startup succeeded.\n'
+          printf 'This checks Actions scheduling only, not the application build.\n'
+          uname -s -m
