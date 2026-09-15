@@ -1,0 +1,884 @@
+PASS Normal benchmark completed
+PASS 56 native self-tests recorded
+PASS No observed data inconsistencies
+PASS Normal main-memory working set exceeds cache guard
+PASS Default array is 256 MiB on this validation machine
+PASS Full 5-core validation suite yielded all 180 expected samples
+PASS Finite positive measurement: memory_bandwidth/mixed_75r25w
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/mixed_25r75w
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/rw_alternating_64B
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/write_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/copy_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/copy_nt
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/mixed_50r50w
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/rw_grouped_64KiB
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/write_nt
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/write_nt
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/mixed_50r50w
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/copy_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/copy_nt
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/rw_grouped_64KiB
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/mixed_75r25w
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/mixed_25r75w
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/rw_alternating_64B
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/write_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/write_nt
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/mixed_50r50w
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/write_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/mixed_25r75w
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/rw_alternating_64B
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/copy_nt
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/rw_grouped_64KiB
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/copy_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/mixed_75r25w
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/mixed_50r50w
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/copy_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/mixed_75r25w
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/mixed_25r75w
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/rw_alternating_64B
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/write_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/write_nt
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/rw_grouped_64KiB
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/copy_nt
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/mixed_25r75w
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/rw_grouped_64KiB
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/mixed_75r25w
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/mixed_50r50w
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/copy_nt
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/rw_alternating_64B
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/write_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/copy_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: memory_bandwidth/write_nt
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L1_working_set/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L1_working_set/write_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L1_working_set/copy_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L1_working_set/copy_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L1_working_set/write_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L1_working_set/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L1_working_set/copy_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L1_working_set/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L1_working_set/write_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L1_working_set/copy_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L1_working_set/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L1_working_set/write_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L1_working_set/write_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L1_working_set/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L1_working_set/copy_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L1_working_set/random_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: L1_working_set/random_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: L1_working_set/random_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: L1_working_set/random_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: L1_working_set/random_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: L2_working_set/write_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L2_working_set/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L2_working_set/copy_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L2_working_set/write_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L2_working_set/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L2_working_set/copy_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L2_working_set/copy_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L2_working_set/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L2_working_set/write_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L2_working_set/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L2_working_set/copy_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L2_working_set/write_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L2_working_set/write_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L2_working_set/copy_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L2_working_set/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L2_working_set/random_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: L2_working_set/random_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: L2_working_set/random_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: L2_working_set/random_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: L2_working_set/random_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: L3_working_set/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L3_working_set/write_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L3_working_set/copy_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L3_working_set/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L3_working_set/copy_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L3_working_set/write_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L3_working_set/write_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L3_working_set/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L3_working_set/copy_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L3_working_set/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L3_working_set/copy_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L3_working_set/write_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L3_working_set/read
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L3_working_set/write_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L3_working_set/copy_cached
+PASS Independent byte/time or load/time recomputation
+PASS Finite positive measurement: L3_working_set/random_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: L3_working_set/random_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: L3_working_set/random_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: L3_working_set/random_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: L3_working_set/random_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/random_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/random_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/random_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/random_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/random_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/page_local_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/page_local_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/page_local_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/page_local_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/page_local_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/sequential_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/sequential_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/sequential_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/sequential_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/sequential_latency
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/parallel_2_chains
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/parallel_2_chains
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/parallel_2_chains
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/parallel_2_chains
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/parallel_2_chains
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/parallel_4_chains
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/parallel_4_chains
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/parallel_4_chains
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/parallel_4_chains
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/parallel_4_chains
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/parallel_8_chains
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/parallel_8_chains
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/parallel_8_chains
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/parallel_8_chains
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: memory_latency/parallel_8_chains
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/read_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/read_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/read_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/mixed_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/read_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/read_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/read_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/read_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/mixed_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/read_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/read_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/read_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/read_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/read_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/mixed_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/mixed_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/read_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/read_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/read_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/read_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/read_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/read_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/mixed_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/read_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS Finite positive measurement: loaded_latency/read_load
+PASS Independent byte/time or load/time recomputation
+PASS Latency-window quantiles are ordered
+PASS Pointer counts consist of 8192-load batches
+PASS All developer benchmark affinity calls succeeded
+PASS CSV/JSON sample counts match
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS CSV/JSON sample identity match
+PASS CSV/JSON numerical values agree
+PASS Smoke run flagged as non-DRAM-valid
+PASS Reject bad CLI: --threads 0
+PASS Reject bad CLI: --memory-mib -1
+PASS Reject bad CLI: --sample-ms x
+PASS Reject bad CLI: --out
+PASS Reject bad CLI: --unknown
+PASS Help is usable
+PASS Version is stable
+PASS Windows binary has DOS header
+PASS Windows PE signature
+PASS Windows AMD64 machine type
+PASS PE32+ optional header
+PASS Unsigned status independently verified
+PASS Only in-box Windows DLL imports; no redistributable DLL dependency
+
+882 assertions passed.

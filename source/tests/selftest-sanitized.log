@@ -1,0 +1,58 @@
+PASS 01  AVX2 plus OS XMM/YMM state support
+PASS 02  Pointer node has exactly one 64-byte cache line
+PASS 03  Monotonic timer advances
+PASS 04  Timer frequency is valid
+PASS 05  Page allocation alignment
+PASS 06  Address-dependent pattern round-trip
+PASS 07  Intentional pattern corruption is detected
+PASS 08  AVX2 Read consumes every requested 64-bit word
+PASS 09  Non-temporal copy full-buffer verification
+PASS 10  Cached copy full-buffer verification
+PASS 11  Non-temporal write full-buffer verification
+PASS 12  Cached write full-buffer verification
+PASS 13  Mixed kernel read subset checksum
+PASS 14  Mixed kernel exact write subset and untouched addresses
+PASS 15  Mixed kernel read subset checksum
+PASS 16  Mixed kernel exact write subset and untouched addresses
+PASS 17  Mixed kernel read subset checksum
+PASS 18  Mixed kernel exact write subset and untouched addresses
+PASS 19  Alternating read/write read checksum
+PASS 20  Alternating read/write full write coverage
+PASS 21  Grouped read/write read checksum
+PASS 22  Grouped read/write full write coverage
+PASS 23  Read byte accounting
+PASS 24  Write byte accounting
+PASS 25  Copy read-plus-write byte accounting
+PASS 26  Grouped and alternating workloads count equal logical bytes
+PASS 27  Mixed workloads count requested logical bytes, not assumed bus traffic
+PASS 28  Disjoint pointer cycles cover the full working set
+PASS 29  Pointer kernel counts loads and returns after a full cycle
+PASS 30  Disjoint pointer cycles cover the full working set
+PASS 31  Pointer kernel counts loads and returns after a full cycle
+PASS 32  Disjoint pointer cycles cover the full working set
+PASS 33  Pointer kernel counts loads and returns after a full cycle
+PASS 34  Disjoint pointer cycles cover the full working set
+PASS 35  Pointer kernel counts loads and returns after a full cycle
+PASS 36  Disjoint pointer cycles cover the full working set
+PASS 37  Pointer kernel counts loads and returns after a full cycle
+PASS 38  Disjoint pointer cycles cover the full working set
+PASS 39  Pointer kernel counts loads and returns after a full cycle
+PASS 40  Disjoint pointer cycles cover the full working set
+PASS 41  Pointer kernel counts loads and returns after a full cycle
+PASS 42  Disjoint pointer cycles cover the full working set
+PASS 43  Pointer kernel counts loads and returns after a full cycle
+PASS 44  Disjoint pointer cycles cover the full working set
+PASS 45  Pointer kernel counts loads and returns after a full cycle
+PASS 46  Disjoint pointer cycles cover the full working set
+PASS 47  Pointer kernel counts loads and returns after a full cycle
+PASS 48  Disjoint pointer cycles cover the full working set
+PASS 49  Pointer kernel counts loads and returns after a full cycle
+PASS 50  Disjoint pointer cycles cover the full working set
+PASS 51  Pointer kernel counts loads and returns after a full cycle
+PASS 52  Cycle validator rejects an intentionally invalid pointer without dereferencing it
+PASS 53  Embedded JSON escapes script-breaking text and controls
+PASS 54  Numeric formatting and timing math
+PASS 55  DDR5 8400 CL42 converts to 10 ns (theory only)
+PASS 56  Throughput uses measured bytes/seconds and decimal GB/s
+
+56 self-tests passed. No hardware stability guarantee is implied.

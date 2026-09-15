@@ -1,0 +1,203 @@
+AM5 Native Memory Lab 2.0.0
+CPU: AMD EPYC 9V74 80-Core Processor                
+Engine: real AVX2 memory access + dependent pointer chasing
+Threads: 5 | Per-array memory: 256 MiB | Repeats: 5 | Sample: 500 ms
+Output: tests/normal/20260915_013956_768
+
+No BIOS/voltage changes will be made. Press Ctrl+C to stop safely.
+Checking execution kernels...
+56 kernel/calculation self-tests passed.
+
+[1/5] Allocate and pre-fault arrays; basic full-buffer integrity checks
+
+[2/5] Real read/write/copy, thread scaling, and read/write access patterns
+  memory_bandwidth   mixed_75r25w            t=5  run=1     60.493 GB/s     
+  memory_bandwidth   mixed_25r75w            t=5  run=1     53.562 GB/s     
+  memory_bandwidth   rw_alternating_64B      t=5  run=1     58.592 GB/s     
+  memory_bandwidth   read                    t=4  run=1    121.872 GB/s     
+  memory_bandwidth   write_cached            t=5  run=1     70.692 GB/s     
+  memory_bandwidth   read                    t=1  run=1     31.322 GB/s     
+  memory_bandwidth   copy_cached             t=5  run=1     57.735 GB/s     
+  memory_bandwidth   copy_nt                 t=5  run=1     93.480 GB/s     
+  memory_bandwidth   read                    t=5  run=1     98.810 GB/s     
+  memory_bandwidth   read                    t=2  run=1     52.870 GB/s     
+  memory_bandwidth   mixed_50r50w            t=5  run=1     34.670 GB/s     
+  memory_bandwidth   rw_grouped_64KiB        t=5  run=1     83.374 GB/s     
+  memory_bandwidth   write_nt                t=5  run=1     74.695 GB/s     
+  memory_bandwidth   write_nt                t=5  run=2     53.951 GB/s     
+  memory_bandwidth   mixed_50r50w            t=5  run=2     28.685 GB/s     
+  memory_bandwidth   copy_cached             t=5  run=2     55.082 GB/s     
+  memory_bandwidth   copy_nt                 t=5  run=2     80.424 GB/s     
+  memory_bandwidth   rw_grouped_64KiB        t=5  run=2     65.667 GB/s     
+  memory_bandwidth   read                    t=2  run=2     41.022 GB/s     
+  memory_bandwidth   mixed_75r25w            t=5  run=2     44.385 GB/s     
+  memory_bandwidth   mixed_25r75w            t=5  run=2     40.896 GB/s     
+  memory_bandwidth   rw_alternating_64B      t=5  run=2     57.989 GB/s     
+  memory_bandwidth   read                    t=1  run=2     31.006 GB/s     
+  memory_bandwidth   read                    t=5  run=2    103.495 GB/s     
+  memory_bandwidth   read                    t=4  run=2    115.515 GB/s     
+  memory_bandwidth   write_cached            t=5  run=2     64.904 GB/s     
+  memory_bandwidth   write_nt                t=5  run=3     56.003 GB/s     
+  memory_bandwidth   mixed_50r50w            t=5  run=3     30.965 GB/s     
+  memory_bandwidth   write_cached            t=5  run=3     79.217 GB/s     
+  memory_bandwidth   mixed_25r75w            t=5  run=3     44.073 GB/s     
+  memory_bandwidth   read                    t=4  run=3     66.438 GB/s     
+  memory_bandwidth   rw_alternating_64B      t=5  run=3     51.192 GB/s     
+  memory_bandwidth   copy_nt                 t=5  run=3    103.146 GB/s     
+  memory_bandwidth   read                    t=2  run=3     60.409 GB/s     
+  memory_bandwidth   read                    t=5  run=3    101.982 GB/s     
+  memory_bandwidth   rw_grouped_64KiB        t=5  run=3     89.403 GB/s     
+  memory_bandwidth   read                    t=1  run=3     30.535 GB/s     
+  memory_bandwidth   copy_cached             t=5  run=3     53.979 GB/s     
+  memory_bandwidth   mixed_75r25w            t=5  run=3     42.257 GB/s     
+  memory_bandwidth   read                    t=4  run=4     64.002 GB/s     
+  memory_bandwidth   mixed_50r50w            t=5  run=4     32.750 GB/s     
+  memory_bandwidth   copy_cached             t=5  run=4     56.049 GB/s     
+  memory_bandwidth   mixed_75r25w            t=5  run=4     45.910 GB/s     
+  memory_bandwidth   mixed_25r75w            t=5  run=4     51.139 GB/s     
+  memory_bandwidth   rw_alternating_64B      t=5  run=4     57.194 GB/s     
+  memory_bandwidth   read                    t=5  run=4     75.055 GB/s     
+  memory_bandwidth   write_cached            t=5  run=4     51.976 GB/s     
+  memory_bandwidth   read                    t=2  run=4     40.891 GB/s     
+  memory_bandwidth   read                    t=1  run=4     30.179 GB/s     
+  memory_bandwidth   write_nt                t=5  run=4     42.668 GB/s     
+  memory_bandwidth   rw_grouped_64KiB        t=5  run=4     52.385 GB/s     
+  memory_bandwidth   copy_nt                 t=5  run=4     76.264 GB/s     
+  memory_bandwidth   mixed_25r75w            t=5  run=5     39.620 GB/s     
+  memory_bandwidth   rw_grouped_64KiB        t=5  run=5     54.250 GB/s     
+  memory_bandwidth   read                    t=1  run=5     30.901 GB/s     
+  memory_bandwidth   mixed_75r25w            t=5  run=5     49.520 GB/s     
+  memory_bandwidth   mixed_50r50w            t=5  run=5     32.797 GB/s     
+  memory_bandwidth   copy_nt                 t=5  run=5    114.346 GB/s     
+  memory_bandwidth   read                    t=4  run=5    101.930 GB/s     
+  memory_bandwidth   read                    t=2  run=5     60.596 GB/s     
+  memory_bandwidth   read                    t=5  run=5     87.172 GB/s     
+  memory_bandwidth   rw_alternating_64B      t=5  run=5     54.870 GB/s     
+  memory_bandwidth   write_cached            t=5  run=5     72.355 GB/s     
+  memory_bandwidth   copy_cached             t=5  run=5     60.401 GB/s     
+  memory_bandwidth   write_nt                t=5  run=5     46.508 GB/s     
+
+[3/5] Cache-sized working sets (single core; not AIDA64 aggregate scores)
+  L1_working_set     read                    t=1  run=1    130.973 GB/s     
+  L1_working_set     write_cached            t=1  run=1     82.340 GB/s     
+  L1_working_set     copy_cached             t=1  run=1    163.589 GB/s     
+  L1_working_set     copy_cached             t=1  run=2    165.240 GB/s     
+  L1_working_set     write_cached            t=1  run=2     81.480 GB/s     
+  L1_working_set     read                    t=1  run=2    130.427 GB/s     
+  L1_working_set     copy_cached             t=1  run=3    162.103 GB/s     
+  L1_working_set     read                    t=1  run=3    132.832 GB/s     
+  L1_working_set     write_cached            t=1  run=3     82.625 GB/s     
+  L1_working_set     copy_cached             t=1  run=4    165.697 GB/s     
+  L1_working_set     read                    t=1  run=4    131.602 GB/s     
+  L1_working_set     write_cached            t=1  run=4     82.928 GB/s     
+  L1_working_set     write_cached            t=1  run=5     81.835 GB/s     
+  L1_working_set     read                    t=1  run=5    124.743 GB/s     
+  L1_working_set     copy_cached             t=1  run=5    160.759 GB/s     
+  L1_working_set     random_latency          t=1  run=1      1.177 ns/access
+  L1_working_set     random_latency          t=1  run=2      1.198 ns/access
+  L1_working_set     random_latency          t=1  run=3      1.152 ns/access
+  L1_working_set     random_latency          t=1  run=4      1.194 ns/access
+  L1_working_set     random_latency          t=1  run=5      1.159 ns/access
+  L2_working_set     write_cached            t=1  run=1    107.215 GB/s     
+  L2_working_set     read                    t=1  run=1    108.148 GB/s     
+  L2_working_set     copy_cached             t=1  run=1    106.028 GB/s     
+  L2_working_set     write_cached            t=1  run=2    111.775 GB/s     
+  L2_working_set     read                    t=1  run=2    111.762 GB/s     
+  L2_working_set     copy_cached             t=1  run=2    109.093 GB/s     
+  L2_working_set     copy_cached             t=1  run=3    102.297 GB/s     
+  L2_working_set     read                    t=1  run=3    107.272 GB/s     
+  L2_working_set     write_cached            t=1  run=3    106.510 GB/s     
+  L2_working_set     read                    t=1  run=4    109.716 GB/s     
+  L2_working_set     copy_cached             t=1  run=4    107.143 GB/s     
+  L2_working_set     write_cached            t=1  run=4    111.390 GB/s     
+  L2_working_set     write_cached            t=1  run=5    108.855 GB/s     
+  L2_working_set     copy_cached             t=1  run=5    106.379 GB/s     
+  L2_working_set     read                    t=1  run=5    110.521 GB/s     
+  L2_working_set     random_latency          t=1  run=1      4.120 ns/access
+  L2_working_set     random_latency          t=1  run=2      4.027 ns/access
+  L2_working_set     random_latency          t=1  run=3      4.155 ns/access
+  L2_working_set     random_latency          t=1  run=4      4.022 ns/access
+  L2_working_set     random_latency          t=1  run=5      3.970 ns/access
+  L3_working_set     read                    t=1  run=1     95.853 GB/s     
+  L3_working_set     write_cached            t=1  run=1     96.431 GB/s     
+  L3_working_set     copy_cached             t=1  run=1     77.737 GB/s     
+  L3_working_set     read                    t=1  run=2     94.014 GB/s     
+  L3_working_set     copy_cached             t=1  run=2     74.531 GB/s     
+  L3_working_set     write_cached            t=1  run=2     94.007 GB/s     
+  L3_working_set     write_cached            t=1  run=3     92.782 GB/s     
+  L3_working_set     read                    t=1  run=3     88.822 GB/s     
+  L3_working_set     copy_cached             t=1  run=3     76.301 GB/s     
+  L3_working_set     read                    t=1  run=4     96.299 GB/s     
+  L3_working_set     copy_cached             t=1  run=4     74.879 GB/s     
+  L3_working_set     write_cached            t=1  run=4     93.990 GB/s     
+  L3_working_set     read                    t=1  run=5     92.201 GB/s     
+  L3_working_set     write_cached            t=1  run=5     94.294 GB/s     
+  L3_working_set     copy_cached             t=1  run=5     77.543 GB/s     
+  L3_working_set     random_latency          t=1  run=1     18.096 ns/access
+  L3_working_set     random_latency          t=1  run=2     20.316 ns/access
+  L3_working_set     random_latency          t=1  run=3     20.507 ns/access
+  L3_working_set     random_latency          t=1  run=4     20.294 ns/access
+  L3_working_set     random_latency          t=1  run=5     18.889 ns/access
+
+[4/5] Serial random/page-local/sequential chains and 2/4/8 independent chains
+  memory_latency     random_latency          t=1  run=1    164.691 ns/access
+  memory_latency     random_latency          t=1  run=2    163.708 ns/access
+  memory_latency     random_latency          t=1  run=3    163.271 ns/access
+  memory_latency     random_latency          t=1  run=4    161.600 ns/access
+  memory_latency     random_latency          t=1  run=5    161.927 ns/access
+  memory_latency     page_local_latency      t=1  run=1     47.407 ns/access
+  memory_latency     page_local_latency      t=1  run=2     49.471 ns/access
+  memory_latency     page_local_latency      t=1  run=3     48.448 ns/access
+  memory_latency     page_local_latency      t=1  run=4     50.016 ns/access
+  memory_latency     page_local_latency      t=1  run=5     46.555 ns/access
+  memory_latency     sequential_latency      t=1  run=1      1.942 ns/access
+  memory_latency     sequential_latency      t=1  run=2      1.897 ns/access
+  memory_latency     sequential_latency      t=1  run=3      1.909 ns/access
+  memory_latency     sequential_latency      t=1  run=4      1.891 ns/access
+  memory_latency     sequential_latency      t=1  run=5      1.935 ns/access
+  memory_latency     parallel_2_chains       t=1  run=1     83.872 ns/access
+  memory_latency     parallel_2_chains       t=1  run=2     81.236 ns/access
+  memory_latency     parallel_2_chains       t=1  run=3     80.699 ns/access
+  memory_latency     parallel_2_chains       t=1  run=4     79.631 ns/access
+  memory_latency     parallel_2_chains       t=1  run=5     80.287 ns/access
+  memory_latency     parallel_4_chains       t=1  run=1     43.729 ns/access
+  memory_latency     parallel_4_chains       t=1  run=2     43.961 ns/access
+  memory_latency     parallel_4_chains       t=1  run=3     42.948 ns/access
+  memory_latency     parallel_4_chains       t=1  run=4     43.020 ns/access
+  memory_latency     parallel_4_chains       t=1  run=5     42.185 ns/access
+  memory_latency     parallel_8_chains       t=1  run=1     22.214 ns/access
+  memory_latency     parallel_8_chains       t=1  run=2     22.578 ns/access
+  memory_latency     parallel_8_chains       t=1  run=3     22.414 ns/access
+  memory_latency     parallel_8_chains       t=1  run=4     21.023 ns/access
+  memory_latency     parallel_8_chains       t=1  run=5     20.928 ns/access
+
+[5/5] Loaded latency: pointer chasing on one core + disjoint traffic on other cores
+  loaded_latency     read_load               t=0  run=1    176.076 ns/access
+  loaded_latency     read_load               t=1  run=1    317.441 ns/access
+  loaded_latency     read_load               t=4  run=1    873.368 ns/access
+  loaded_latency     mixed_load              t=4  run=1    271.524 ns/access
+  loaded_latency     read_load               t=2  run=1    679.114 ns/access
+  loaded_latency     read_load               t=0  run=2    167.601 ns/access
+  loaded_latency     read_load               t=4  run=2   1140.707 ns/access
+  loaded_latency     read_load               t=1  run=2    353.726 ns/access
+  loaded_latency     mixed_load              t=4  run=2    260.096 ns/access
+  loaded_latency     read_load               t=2  run=2    180.384 ns/access
+  loaded_latency     read_load               t=4  run=3    260.513 ns/access
+  loaded_latency     read_load               t=2  run=3    187.916 ns/access
+  loaded_latency     read_load               t=0  run=3    196.244 ns/access
+  loaded_latency     read_load               t=1  run=3    196.997 ns/access
+  loaded_latency     mixed_load              t=4  run=3    278.093 ns/access
+  loaded_latency     mixed_load              t=4  run=4    316.659 ns/access
+  loaded_latency     read_load               t=0  run=4    171.279 ns/access
+  loaded_latency     read_load               t=4  run=4   1224.013 ns/access
+  loaded_latency     read_load               t=1  run=4    296.014 ns/access
+  loaded_latency     read_load               t=2  run=4    368.287 ns/access
+  loaded_latency     read_load               t=0  run=5    167.378 ns/access
+  loaded_latency     read_load               t=1  run=5    211.185 ns/access
+  loaded_latency     mixed_load              t=4  run=5    205.779 ns/access
+  loaded_latency     read_load               t=2  run=5    167.052 ns/access
+  loaded_latency     read_load               t=4  run=5    197.307 ns/access
+
+Measurement completed. 94 seconds.
+Report: tests/normal/20260915_013956_768/report.html
+Raw: results.json and raw.csv in the same folder.

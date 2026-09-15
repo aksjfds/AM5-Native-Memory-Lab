@@ -1,0 +1,4 @@
+PASS SIGINT exits without worker deadlock
+PASS exit code 2
+PASS complete=false
+PASS valid partial JSON with 3 completed samples

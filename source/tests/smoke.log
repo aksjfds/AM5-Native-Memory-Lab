@@ -1,0 +1,87 @@
+AM5 Native Memory Lab 2.0.0
+CPU: AMD EPYC 9V74 80-Core Processor                
+Engine: real AVX2 memory access + dependent pointer chasing
+Threads: 2 | Per-array memory: 16 MiB | Repeats: 2 | Sample: 25 ms
+Output: tests/smoke/20260915_013955_699
+
+No BIOS/voltage changes will be made. Press Ctrl+C to stop safely.
+Checking execution kernels...
+56 kernel/calculation self-tests passed.
+
+[1/5] Allocate and pre-fault arrays; basic full-buffer integrity checks
+
+[2/5] Real read/write/copy, thread scaling, and read/write access patterns
+  memory_bandwidth   read                    t=2  run=1    182.723 GB/s     
+  memory_bandwidth   write_cached            t=2  run=1    174.602 GB/s     
+  memory_bandwidth   read                    t=1  run=1     65.394 GB/s     
+  memory_bandwidth   rw_alternating_64B      t=2  run=1    100.199 GB/s     
+  memory_bandwidth   mixed_50r50w            t=2  run=1     77.589 GB/s     
+  memory_bandwidth   copy_cached             t=2  run=1     99.607 GB/s     
+  memory_bandwidth   write_nt                t=2  run=1     28.082 GB/s     
+  memory_bandwidth   mixed_25r75w            t=2  run=1     53.723 GB/s     
+  memory_bandwidth   copy_nt                 t=2  run=1     54.684 GB/s     
+  memory_bandwidth   rw_grouped_64KiB        t=2  run=1     97.778 GB/s     
+  memory_bandwidth   mixed_75r25w            t=2  run=1    102.974 GB/s     
+  memory_bandwidth   rw_alternating_64B      t=2  run=2     97.183 GB/s     
+  memory_bandwidth   write_cached            t=2  run=2    180.424 GB/s     
+  memory_bandwidth   mixed_75r25w            t=2  run=2     99.309 GB/s     
+  memory_bandwidth   rw_grouped_64KiB        t=2  run=2     96.624 GB/s     
+  memory_bandwidth   read                    t=2  run=2    179.512 GB/s     
+  memory_bandwidth   mixed_50r50w            t=2  run=2     79.183 GB/s     
+  memory_bandwidth   read                    t=1  run=2     70.158 GB/s     
+  memory_bandwidth   mixed_25r75w            t=2  run=2     58.300 GB/s     
+  memory_bandwidth   write_nt                t=2  run=2     45.815 GB/s     
+  memory_bandwidth   copy_cached             t=2  run=2    138.963 GB/s     
+  memory_bandwidth   copy_nt                 t=2  run=2    102.564 GB/s     
+
+[3/5] Cache-sized working sets (single core; not AIDA64 aggregate scores)
+  L1_working_set     read                    t=1  run=1    127.666 GB/s     
+  L1_working_set     copy_cached             t=1  run=1    164.858 GB/s     
+  L1_working_set     write_cached            t=1  run=1     81.913 GB/s     
+  L1_working_set     copy_cached             t=1  run=2    165.001 GB/s     
+  L1_working_set     read                    t=1  run=2    130.737 GB/s     
+  L1_working_set     write_cached            t=1  run=2     76.671 GB/s     
+  L1_working_set     random_latency          t=1  run=1      1.139 ns/access
+  L1_working_set     random_latency          t=1  run=2      1.116 ns/access
+  L2_working_set     read                    t=1  run=1    111.581 GB/s     
+  L2_working_set     copy_cached             t=1  run=1    103.972 GB/s     
+  L2_working_set     write_cached            t=1  run=1    109.812 GB/s     
+  L2_working_set     write_cached            t=1  run=2    111.787 GB/s     
+  L2_working_set     copy_cached             t=1  run=2    107.664 GB/s     
+  L2_working_set     read                    t=1  run=2    114.633 GB/s     
+  L2_working_set     random_latency          t=1  run=1      3.893 ns/access
+  L2_working_set     random_latency          t=1  run=2      3.893 ns/access
+  L3_working_set     copy_cached             t=1  run=1     79.730 GB/s     
+  L3_working_set     write_cached            t=1  run=1     96.951 GB/s     
+  L3_working_set     read                    t=1  run=1     95.053 GB/s     
+  L3_working_set     copy_cached             t=1  run=2     78.071 GB/s     
+  L3_working_set     write_cached            t=1  run=2     97.410 GB/s     
+  L3_working_set     read                    t=1  run=2     95.648 GB/s     
+  L3_working_set     random_latency          t=1  run=1     18.099 ns/access
+  L3_working_set     random_latency          t=1  run=2     18.668 ns/access
+
+[4/5] Serial random/page-local/sequential chains and 2/4/8 independent chains
+  memory_latency     random_latency          t=1  run=1     83.984 ns/access
+  memory_latency     random_latency          t=1  run=2     48.944 ns/access
+  memory_latency     page_local_latency      t=1  run=1     12.954 ns/access
+  memory_latency     page_local_latency      t=1  run=2      9.186 ns/access
+  memory_latency     sequential_latency      t=1  run=1      1.195 ns/access
+  memory_latency     sequential_latency      t=1  run=2      1.219 ns/access
+  memory_latency     parallel_2_chains       t=1  run=1     13.801 ns/access
+  memory_latency     parallel_2_chains       t=1  run=2     11.918 ns/access
+  memory_latency     parallel_4_chains       t=1  run=1      5.815 ns/access
+  memory_latency     parallel_4_chains       t=1  run=2      5.862 ns/access
+  memory_latency     parallel_8_chains       t=1  run=1      3.109 ns/access
+  memory_latency     parallel_8_chains       t=1  run=2      3.092 ns/access
+
+[5/5] Loaded latency: pointer chasing on one core + disjoint traffic on other cores
+  loaded_latency     mixed_load              t=1  run=1     75.960 ns/access
+  loaded_latency     read_load               t=0  run=1     75.309 ns/access
+  loaded_latency     read_load               t=1  run=1     63.963 ns/access
+  loaded_latency     mixed_load              t=1  run=2     61.709 ns/access
+  loaded_latency     read_load               t=0  run=2     78.482 ns/access
+  loaded_latency     read_load               t=1  run=2    104.127 ns/access
+
+Measurement completed. 2 seconds.
+Report: tests/smoke/20260915_013955_699/report.html
+Raw: results.json and raw.csv in the same folder.

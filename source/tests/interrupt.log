@@ -1,0 +1,26 @@
+AM5 Native Memory Lab 2.0.0
+CPU: AMD EPYC 9V74 80-Core Processor                
+Engine: real AVX2 memory access + dependent pointer chasing
+Threads: 2 | Per-array memory: 256 MiB | Repeats: 5 | Sample: 500 ms
+Output: /mnt/data/am5_native_work/tests/interrupted/20260915_014710_1850
+
+No BIOS/voltage changes will be made. Press Ctrl+C to stop safely.
+Checking execution kernels...
+56 kernel/calculation self-tests passed.
+
+[1/5] Allocate and pre-fault arrays; basic full-buffer integrity checks
+
+[2/5] Real read/write/copy, thread scaling, and read/write access patterns
+  memory_bandwidth   read                    t=2  run=1     57.287 GB/s     
+  memory_bandwidth   write_cached            t=2  run=1     59.356 GB/s     
+  memory_bandwidth   read                    t=1  run=1     29.361 GB/s     
+
+[3/5] Cache-sized working sets (single core; not AIDA64 aggregate scores)
+
+[4/5] Serial random/page-local/sequential chains and 2/4/8 independent chains
+
+[5/5] Loaded latency: pointer chasing on one core + disjoint traffic on other cores
+
+Measurement stopped / errors detected. 2 seconds.
+Report: /mnt/data/am5_native_work/tests/interrupted/20260915_014710_1850/report.html
+Raw: results.json and raw.csv in the same folder.

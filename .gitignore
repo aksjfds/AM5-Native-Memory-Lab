@@ -1,0 +1,16 @@
+# Local builds and new benchmark outputs
+/source/build/
+/results/
+/source/results/
+*.exe
+*.obj
+*.o
+*.lib
+*.pdb
+__pycache__/
+*.py[cod]
+.DS_Store
+Thumbs.db
+.env
+.env.*
+!.env.example

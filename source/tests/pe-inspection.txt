@@ -1,0 +1,137 @@
+
+/mnt/data/am5_native_work/build/AM5MemoryLab.exe:	file format coff-x86-64
+Characteristics 0x22
+	executable
+	large address aware
+
+Time/Date               Thu Jan  1 00:00:00 1970
+Magic                   020b	(PE32+)
+MajorLinkerVersion      14
+MinorLinkerVersion      0
+SizeOfCode              0000000000008800
+SizeOfInitializedData   0000000000008800
+SizeOfUninitializedData 0000000000000000
+AddressOfEntryPoint     0000000000001000
+BaseOfCode              0000000000001000
+ImageBase               0000000140000000
+SectionAlignment        00001000
+FileAlignment           00000200
+MajorOSystemVersion     6
+MinorOSystemVersion     0
+MajorImageVersion       0
+MinorImageVersion       0
+MajorSubsystemVersion   6
+MinorSubsystemVersion   0
+Win32Version            00000000
+SizeOfImage             00015000
+SizeOfHeaders           00000400
+CheckSum                00000000
+Subsystem               00000003	(Windows CUI)
+DllCharacteristics      00008160
+					HIGH_ENTROPY_VA
+					DYNAMIC_BASE
+					NX_COMPAT
+					TERMINAL_SERVER_AWARE
+SizeOfStackReserve      0000000000200000
+SizeOfStackCommit       0000000000001000
+SizeOfHeapReserve       0000000000100000
+SizeOfHeapCommit        0000000000001000
+LoaderFlags             00000000
+NumberOfRvaAndSizes     00000010
+
+The Data Directory
+Entry 0 0000000000000000 00000000 Export Directory [.edata (or where ever we found it)]
+Entry 1 0000000000011b14 00000064 Import Directory [parts of .idata]
+Entry 2 0000000000000000 00000000 Resource Directory [.rsrc]
+Entry 3 0000000000000000 00000000 Exception Directory [.pdata]
+Entry 4 0000000000000000 00000000 Security Directory
+Entry 5 0000000000014000 00000024 Base Relocation Directory [.reloc]
+Entry 6 0000000000000000 00000000 Debug Directory
+Entry 7 0000000000000000 00000000 Description Directory
+Entry 8 0000000000000000 00000000 Special Directory
+Entry 9 0000000000000000 00000000 Thread Storage Directory [.tls]
+Entry a 0000000000000000 00000000 Load Configuration Directory
+Entry b 0000000000000000 00000000 Bound Import Directory
+Entry c 0000000000011d60 000001e8 Import Address Table Directory
+Entry d 0000000000000000 00000000 Delay Import Directory
+Entry e 0000000000000000 00000000 CLR Runtime Header
+Entry f 0000000000000000 00000000 Reserved
+
+The Import Tables:
+  lookup 00011b78 time 00000000 fwd 00000000 name 000122a0 addr 00011d60
+
+    DLL Name: KERNEL32.dll
+    Hint/Ord  Name
+           0  CloseHandle
+           0  CreateDirectoryW
+           0  CreateThread
+           0  ExitProcess
+           0  GetCommandLineW
+           0  GetCurrentProcessId
+           0  GetCurrentThread
+           0  GetLastError
+           0  GetLocalTime
+           0  GetLogicalProcessorInformationEx
+           0  GetModuleFileNameW
+           0  GetSystemTime
+           0  GetSystemTimes
+           0  GlobalMemoryStatusEx
+           0  LocalFree
+           0  MultiByteToWideChar
+           0  QueryPerformanceCounter
+           0  QueryPerformanceFrequency
+           0  SetConsoleCtrlHandler
+           0  SetConsoleOutputCP
+           0  SetThreadGroupAffinity
+           0  Sleep
+           0  SwitchToThread
+           0  VirtualAlloc
+           0  VirtualFree
+           0  WaitForSingleObject
+           0  WideCharToMultiByte
+
+  lookup 00011c58 time 00000000 fwd 00000000 name 000122ad addr 00011e40
+
+    DLL Name: SHELL32.dll
+    Hint/Ord  Name
+           0  CommandLineToArgvW
+           0  ShellExecuteW
+
+  lookup 00011c70 time 00000000 fwd 00000000 name 000122b9 addr 00011e58
+
+    DLL Name: WEVTAPI.dll
+    Hint/Ord  Name
+           0  EvtClose
+           0  EvtNext
+           0  EvtQuery
+           0  EvtRender
+
+  lookup 00011c98 time 00000000 fwd 00000000 name 000122c5 addr 00011e80
+
+    DLL Name: MSVCRT.dll
+    Hint/Ord  Name
+           0  _vscprintf
+           0  _vsnprintf
+           0  _wfopen
+           0  calloc
+           0  exit
+           0  fclose
+           0  fflush
+           0  fprintf
+           0  fread
+           0  free
+           0  fwrite
+           0  malloc
+           0  memcmp
+           0  memcpy
+           0  memset
+           0  printf
+           0  qsort
+           0  realloc
+           0  strchr
+           0  strcmp
+           0  strlen
+           0  strrchr
+           0  strstr
+           0  strtoul
+

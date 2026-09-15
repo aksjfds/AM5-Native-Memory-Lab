@@ -1,0 +1,16 @@
+PASS Full report JavaScript executes without errors
+PASS Complete normal run enables only the supported active diagnostic section
+PASS All actual samples rendered
+PASS Six evidence-based active diagnostic views rendered
+PASS All throughput / ratio / group tests are visible
+PASS All three cache-size rows rendered
+PASS Per-parameter attribution limitations are explicit
+PASS Report makes no network requests
+PASS Read summary equals observed best median, not a theoretical score
+PASS Copy payload rate is half the explicit read+write logical rate
+PASS Embedded JSON export works offline
+PASS Narrow layout has no whole-page horizontal overflow
+PASS Developer smoke data cannot produce normal DRAM diagnostic conclusions
+PASS No browser errors after all interactions
+
+14 browser assertions passed.
