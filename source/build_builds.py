@@ -9,7 +9,7 @@ for line in template.splitlines(keepends=True):
  for i in range(0,len(line),1000): h+=json.dumps(line[i:i+1000],ensure_ascii=False)+'\n'
 h+=';\n#endif\n'
 (P/'src/report_template.h').write_text(h,encoding='utf-8')
-src=['main','platform','util','kernels','bench','selftest','report']
+src=['main','platform','util','kernels','bench','diagnostic','selftest','report']
 def run(args):
  r=subprocess.run(args,cwd=P,text=True,capture_output=True)
  if r.stdout: print(r.stdout)
@@ -26,7 +26,7 @@ for name,syms in mods.items():
  d=B/(name+'.def'); d.write_text('LIBRARY '+name.upper()+'.dll\nEXPORTS\n'+'\n'.join(syms)+'\n')
  run(['lld-link','/lib','/def:'+str(d),'/machine:x64','/out:'+str(B/(name+'.lib'))])
 for s in src:
- # Clang 18's MSVC-target intrinsic headers expose AVX2 only when enabled
+ # Clang's MSVC-target intrinsic headers expose AVX2 only when enabled
  # on the translation unit. Keep startup and CPU detection baseline x64.
  target_flags=['-mavx2'] if s=='kernels' else []
  run(['clang','--target=x86_64-pc-windows-msvc',*target_flags,'-std=c11','-ffreestanding','-fno-stack-protector','-O3','-Wall','-Wextra','-Wno-overlength-strings','-Iwinshim','-c',f'src/{s}.c','-o',str(B/(s+'.obj'))])

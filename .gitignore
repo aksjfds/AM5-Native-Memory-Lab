@@ -2,6 +2,7 @@
 /source/build/
 /results/
 /source/results/
+/source/src/report_template.h
 *.exe
 *.obj
 *.o

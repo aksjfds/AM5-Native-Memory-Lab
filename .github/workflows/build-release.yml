@@ -172,7 +172,7 @@ jobs:
 
           - 源码提交：${GITHUB_SHA}
           - 构建与测试记录：${RUN_URL}
-          - 已通过 Linux 和 Windows 运行环境的 56 项内核自检及小工作集端到端检查。
+          - 已通过 Linux 和 Windows 运行环境的 60 项内核自检及小工作集端到端检查。
           - 下载 AM5MemoryLab-Windows-x64.zip，完整解压后运行 START.cmd。
           - SHA256SUMS.txt 用于校验下载文件；BUILD_INFO.txt 记录源码和编译器信息。
 

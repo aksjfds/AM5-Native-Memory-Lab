@@ -18,11 +18,12 @@ python build_builds.py
 
 - src/platform.c / src/win_min.h：计时、拓扑、绑核、页面分配、文件、WHEA、程序启动。
 - src/kernels.c：AVX2 读写与依赖指针链，所有性能都由这些真实访问生成。
-- src/bench.c：线程同步、计时、负载矩阵、逐样本保存。
-- src/selftest.c：56 项运行时内核/数学自检。
+- src/bench.c：线程同步、计时、负载矩阵、方向切换扫描、短窗口尾延迟、逐样本保存。
+- src/diagnostic.c：本轮差分证据、稳健噪声、回归拟合与参数组优先级。
+- src/selftest.c：60 项运行时内核/数学自检。
 - src/report.c / report/template.html：结果序列化、当前运行的主动诊断与中文报告。
 - src/main.c：入口、运行选项和流程。
 - winshim/：交叉编译时使用的最小系统 C 接口声明，不是随包运行库。
 - tests/：开发环境验证脚本和记录。验证脚本中的样本数以所附 5-CPU Linux 测试为准，不是任意机器都固定 180。
 
-Windows 二进制尚未在 Windows 下运行验证，详见根目录 VALIDATION.md。
+当前 GitHub Actions 会在 Windows runner 上对同一发布候选 EXE 执行 60 项自检和 smoke workflow；根目录 `VALIDATION.md` 保留的是最初开发包的历史验证记录，不代表当前 CI 状态。

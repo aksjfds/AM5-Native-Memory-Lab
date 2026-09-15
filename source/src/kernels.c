@@ -1,11 +1,11 @@
 #include "lab.h"
-const char* kernel_id(Kernel k){static const char* a[]={"read","write_nt","copy_nt","write_cached","copy_cached","mixed_75r25w","mixed_50r50w","mixed_25r75w","rw_alternating_64B","rw_grouped_64KiB"};return a[(int)k];}
+const char* kernel_id(Kernel k){static const char* a[]={"read","write_nt","copy_nt","write_cached","copy_cached","mixed_75r25w","mixed_50r50w","mixed_25r75w","rw_alternating_64B","rw_grouped_64KiB","turnaround_sweep"};return a[(int)k];}
 uint64_t write_value(void){return 0xa53cc35af00d9696ULL;}
 uint64_t pattern_word(size_t i,uint64_t seed){uint64_t x=(uint64_t)i+seed;x^=x>>30;x*=0xbf58476d1ce4e5b9ULL;x^=x>>27;x*=0x94d049bb133111ebULL;return x^(x>>31);}
 void fill_pattern(void* p,size_t n,uint64_t seed){uint64_t *a=p;for(size_t i=0;i<n/8;i++)a[i]=pattern_word(i,seed);}
 uint64_t verify_pattern(const void* p,size_t n,uint64_t seed){const volatile uint64_t *a=p;uint64_t bad=0;for(size_t i=0;i<n/8;i++)if(a[i]!=pattern_word(i,seed))bad++;return bad;}
 uint64_t verify_constant(const void* p,size_t n,uint64_t value){const volatile uint64_t *a=p;uint64_t bad=0;for(size_t i=0;i<n/8;i++)if(a[i]!=value)bad++;return bad;}
-uint64_t kernel_bytes(Kernel k,size_t n){return (k==K_COPY_NT||k==K_COPY_CACHED||k==K_ALT50||k==K_GROUP50)?(uint64_t)n*2:n;}
+uint64_t kernel_bytes(Kernel k,size_t n){return (k==K_COPY_NT||k==K_COPY_CACHED||k==K_ALT50||k==K_GROUP50||k==K_TURN_SWEEP)?(uint64_t)n*2:n;}
 #define READ64(pos) do {a0=_mm256_xor_si256(a0,_mm256_load_si256((const __m256i*)(a+(pos))));a1=_mm256_xor_si256(a1,_mm256_load_si256((const __m256i*)(a+(pos)+32)));}while(0)
 #define WRITE64(pos) do {_mm256_store_si256((__m256i*)(b+(pos)),val);_mm256_store_si256((__m256i*)(b+(pos)+32),val);}while(0)
 AVX2 uint64_t stream_kernel(Kernel k,uint8_t* a,uint8_t* b,size_t n){
@@ -27,11 +27,33 @@ AVX2 uint64_t stream_kernel(Kernel k,uint8_t* a,uint8_t* b,size_t n){
     case K_ALT50:for(size_t i=0;i<n;i+=64){READ64(i);WRITE64(i);}_mm_sfence();break;
     case K_GROUP50:
         for(size_t i=0;i<n;i+=65536){size_t end=i+65536<n?i+65536:n;for(size_t j=i;j<end;j+=64){READ64(j);}for(size_t j=i;j<end;j+=64){WRITE64(j);}}_mm_sfence();break;
+    case K_TURN_SWEEP:break;
     }
     a0=_mm256_xor_si256(_mm256_xor_si256(a0,a1),_mm256_xor_si256(a2,a3));uint64_t r[4];_mm256_storeu_si256((__m256i*)r,a0);_mm256_zeroupper();return r[0]^r[1]^r[2]^r[3];
 }
 #undef READ64
 #undef WRITE64
+
+uint64_t turnaround_events(size_t n,size_t group_bytes){
+    if(group_bytes<64)group_bytes=64;group_bytes=group_bytes/64*64;if(!group_bytes)group_bytes=64;
+    uint64_t groups=(uint64_t)((n+group_bytes-1)/group_bytes);return groups?groups*2-1:0;
+}
+AVX2 uint64_t turnaround_kernel(uint8_t* a,uint8_t* b,size_t n,size_t group_bytes){
+    if(group_bytes<64)group_bytes=64;group_bytes=group_bytes/64*64;if(!group_bytes)group_bytes=64;
+    __m256i x0=_mm256_setzero_si256(),x1=x0,val=_mm256_set1_epi64x((long long)write_value());
+    for(size_t base=0;base<n;base+=group_bytes){
+        size_t end=base+group_bytes<n?base+group_bytes:n;
+        for(size_t j=base;j+64<=end;j+=64){
+            x0=_mm256_xor_si256(x0,_mm256_load_si256((const __m256i*)(a+j)));
+            x1=_mm256_xor_si256(x1,_mm256_load_si256((const __m256i*)(a+j+32)));
+        }
+        for(size_t j=base;j+64<=end;j+=64){
+            _mm256_stream_si256((__m256i*)(b+j),val);
+            _mm256_stream_si256((__m256i*)(b+j+32),val);
+        }
+    }
+    _mm_sfence();x0=_mm256_xor_si256(x0,x1);uint64_t r[4];_mm256_storeu_si256((__m256i*)r,x0);_mm256_zeroupper();return r[0]^r[1]^r[2]^r[3];
+}
 static void shuffle(uint32_t* p,size_t n,uint64_t* s){for(size_t i=n;i>1;i--){size_t j=(size_t)(rng_next(s)%i);uint32_t t=p[i-1];p[i-1]=p[j];p[j]=t;}}
 void chain_build(Chain* c,void* p,size_t bytes,unsigned chains,int mode,uint64_t seed){
     memset(c,0,sizeof(*c));c->base=p;c->bytes=bytes;c->count=bytes/64;c->chains=chains;

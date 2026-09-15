@@ -18,6 +18,8 @@ int run_selftests(bool verbose){
         for(size_t i=0;i<n/8;i++){uint64_t want=((i*8)%256)>=(size_t)rr[k]*64?write_value():0xccccccccccccccccULL;if(((uint64_t*)b)[i]!=want){good=false;break;}}check(good,"Mixed kernel exact write subset and untouched addresses");}
     memset(b,0,n);check(stream_kernel(K_ALT50,a,b,n)==reference,"Alternating read/write read checksum");check(verify_constant(b,n,write_value())==0,"Alternating read/write full write coverage");
     memset(b,0,n);check(stream_kernel(K_GROUP50,a,b,n)==reference,"Grouped read/write read checksum");check(verify_constant(b,n,write_value())==0,"Grouped read/write full write coverage");
+    memset(b,0,n);check(turnaround_kernel(a,b,n,64)==reference,"64B turnaround sweep consumes the full read stream");check(verify_constant(b,n,write_value())==0,"64B turnaround sweep full write coverage");
+    memset(b,0,n);check(turnaround_kernel(a,b,n,65536)==reference,"64KiB turnaround sweep consumes the full read stream");check(verify_constant(b,n,write_value())==0,"64KiB turnaround sweep full write coverage");
     check(kernel_bytes(K_READ,n)==n,"Read byte accounting");check(kernel_bytes(K_WRITE_NT,n)==n,"Write byte accounting");check(kernel_bytes(K_COPY_NT,n)==n*2,"Copy read-plus-write byte accounting");check(kernel_bytes(K_ALT50,n)==kernel_bytes(K_GROUP50,n),"Grouped and alternating workloads count equal logical bytes");
     check(kernel_bytes(K_MIX75,n)==n&&kernel_bytes(K_MIX25,n)==n,"Mixed workloads count requested logical bytes, not assumed bus traffic");
     const size_t cn=256*1024;
