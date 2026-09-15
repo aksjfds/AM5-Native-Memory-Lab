@@ -26,7 +26,10 @@ for name,syms in mods.items():
  d=B/(name+'.def'); d.write_text('LIBRARY '+name.upper()+'.dll\nEXPORTS\n'+'\n'.join(syms)+'\n')
  run(['lld-link','/lib','/def:'+str(d),'/machine:x64','/out:'+str(B/(name+'.lib'))])
 for s in src:
- run(['clang','--target=x86_64-pc-windows-msvc','-std=c11','-ffreestanding','-fno-stack-protector','-O3','-Wall','-Wextra','-Wno-overlength-strings','-Iwinshim','-c',f'src/{s}.c','-o',str(B/(s+'.obj'))])
+ # Clang 18's MSVC-target intrinsic headers expose AVX2 only when enabled
+ # on the translation unit. Keep startup and CPU detection baseline x64.
+ target_flags=['-mavx2'] if s=='kernels' else []
+ run(['clang','--target=x86_64-pc-windows-msvc',*target_flags,'-std=c11','-ffreestanding','-fno-stack-protector','-O3','-Wall','-Wextra','-Wno-overlength-strings','-Iwinshim','-c',f'src/{s}.c','-o',str(B/(s+'.obj'))])
 run(['clang','--target=x86_64-pc-windows-msvc','-c','src/chkstk.S','-o',str(B/'chkstk.obj')])
 run(['lld-link','/entry:mainCRTStartup','/subsystem:console,6.0','/nodefaultlib','/machine:x64','/dynamicbase','/nxcompat','/highentropyva','/stack:2097152','/opt:ref','/opt:icf','/timestamp:0','/out:'+str(B/'AM5MemoryLab.exe'),*[str(B/(s+'.obj')) for s in src],str(B/'chkstk.obj'),*[str(B/(s+'.lib')) for s in mods]])
 print('Linux and Windows x64 builds complete.')
