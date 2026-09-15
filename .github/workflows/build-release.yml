@@ -41,7 +41,7 @@ jobs:
           mkdir -p ci-validation
           clang --version
           lld-link --version
-          python3 source/build_builds.py 2>&1 | tee ci-validation/build.log
+          python3 -u source/build_builds.py 2>&1 | tee ci-validation/build.log
       - name: Run Linux self-tests and smoke test
         run: |
           source/build/am5lab-linux --self-test 2>&1 | tee ci-validation/linux-selftest.log
