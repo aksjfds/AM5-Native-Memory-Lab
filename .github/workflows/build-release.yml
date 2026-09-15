@@ -155,18 +155,13 @@ jobs:
         run: |
           set -euo pipefail
           (cd dist && sha256sum --check SHA256SUMS.txt)
-          flags=()
+          # All eligible builds publish a regular Release, never a Pre-release.
+          flags=(--prerelease=false --latest)
           if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
             tag="$GITHUB_REF_NAME"
             flags+=(--verify-tag)
-            if [[ "$tag" == *-* ]]; then
-              flags+=(--prerelease --latest=false)
-            else
-              flags+=(--latest)
-            fi
           else
             tag="ci-${RUN_NUMBER}-${RUN_ATTEMPT}"
-            flags+=(--prerelease --latest=false)
           fi
           if gh release view "$tag" >/dev/null 2>&1; then
             echo "::error::Release $tag already exists; existing assets will not be overwritten."

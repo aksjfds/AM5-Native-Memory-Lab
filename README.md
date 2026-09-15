@@ -16,11 +16,11 @@ Windows x64 原生内存实测与主动访问模式诊断程序。核心为 C11/
 
 | 触发方式 | 行为 |
 |---|---|
-| 推送到 `main` | 编译、验证，并发布独立的 `ci-运行编号-尝试编号` 预发布版 |
+| 推送到 `main` | 编译、验证，并发布独立的 `ci-运行编号-尝试编号` 正式 Release，标记为 Latest |
 | 向 `main` 提交 Pull Request | 编译和验证，仅保存 Actions artifacts，不发布 Release |
-| 推送 `v` 加数字开头的标签，如 `v2.0.0` | 编译、验证，使用该标签发布正式 Release |
-| 推送含 `-` 的版本标签，如 `v2.0.0-rc.1` | 使用该标签发布预发布版，不覆盖 Latest 正式版本 |
-| 在 Actions 页面手动 Run workflow | `main` 发布 CI 预发布版；版本标签按标签规则发布；其他分支只构建 |
+| 推送 `v` 加数字开头的标签，如 `v2.0.0` | 编译、验证，使用该标签发布正式 Release，标记为 Latest |
+| 推送含 `-` 的版本标签，如 `v2.0.0-rc.1` | 同样使用该标签发布正式 Release，不设置 Pre-release 标记 |
+| 在 Actions 页面手动 Run workflow | `main` 和版本标签均发布正式 Release，标记为 Latest；其他分支只构建 |
 
 构建沿用现有 `source/build_builds.py`：Ubuntu 24.04 安装 Clang/LLD 18，生成 Linux 验证程序和 Windows x64 EXE。Linux 执行 56 项内核自检和小工作集端到端测试，随后打包 Windows 程序。
 
@@ -32,7 +32,7 @@ Windows Server 2022 runner 下载**同一份 ZIP**，校验 SHA-256、解压、�
 - `BUILD_INFO.txt`：完整源码提交号、编译器版本、EXE 校验值和 Actions 运行地址。
 - `SHA256SUMS.txt`：ZIP 与构建信息文件的 SHA-256。
 
-Actions 同时保留发布候选包和两端测试日志 14 天。Release 附件不受该 artifact 保留期限制。同名 Release 已存在时停止发布，不删除标签、不覆盖原有附件、不强制推送。普通 `main` 构建为预发布版，不抢占 Latest 正式版本。
+Actions 同时保留发布候选包和两端测试日志 14 天。Release 附件不受该 artifact 保留期限制。同名 Release 已存在时停止发布，不删除标签、不覆盖原有附件、不强制推送。所有符合发布条件的构建都直接发布正式 Release（`--prerelease=false`），并标记为 Latest（`--latest`），不再创建 Pre-release。此规则只影响后续发布，不自动修改历史版本。
 
 不需要额外配置 PAT 或 Secret；构建任务只有 `contents: read`，发布任务使用 GitHub 自动提供的 `GITHUB_TOKEN` 和 `contents: write`。仓库须允许 GitHub Actions 运行及该权限；不要将工作流改为执行不可信 PR 的 `pull_request_target`。
 
