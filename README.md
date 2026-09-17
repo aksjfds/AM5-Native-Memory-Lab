@@ -2,9 +2,9 @@
 
 [![Build and Release](https://github.com/aksjfds/AM5-Native-Memory-Lab/actions/workflows/build-release.yml/badge.svg)](https://github.com/aksjfds/AM5-Native-Memory-Lab/actions/workflows/build-release.yml)
 
-Windows x64 原生 **Copy 短板分析器**。当前版本 **2.2.0**，引擎 `AM5-Native-2.2.0-COPY-AVX2`，结果 Schema `AM5Native/4`。
+Windows x64 原生 **Copy 短板分析器**。当前版本 **2.2.1**，引擎 `AM5-Native-2.2.1-COPY-AVX2`，结果 Schema `AM5Native/4`。
 
-项目现在只聚焦一个目标：
+项目只聚焦一个目标：
 
 > 在当前内存配置下，通过正交微基准找出最可能限制本项目 Copy workload 的访问路径，并把有证据的路径映射到候选参数组；没有足够证据时明确输出 `no_evidence` 或 `unresolved`，不强行挑时序。
 
@@ -12,7 +12,21 @@ Windows x64 原生 **Copy 短板分析器**。当前版本 **2.2.0**，引擎 `A
 
 在 Releases 下载 `AM5MemoryLab-Windows-x64.zip`，完整解压后运行 `START.cmd`。需要 Windows x64 + AVX2；不需要 Python 或编译器。程序不修改 BIOS、电压或系统安全设置。
 
-## 2.2.0 的 Copy 专项测试
+## 2.2.1 质量加固
+
+2.2.1 不改变 Copy 分析目标，重点修复和降低假阳性风险：
+
+- Read/Write/Copy 侧向压力改为**同 trial 配对统计**，加入 MAD 噪声门槛，不再仅用三个总体中位数直接排名；
+- 如果 Copy 每方向吞吐超过对应独立 Read/Write 参考的 120%，说明“独立参考≈上限”的假设不成立，该诊断自动降级为 `unresolved`；
+- 所有需要多核背景负载的诊断都先检查样本是否存在，1 线程或缺测时不再把占位值格式化成报告数字；
+- Copy 背景负载和 Copy-loaded tail probe 结束后增加完整 `memcmp`，把这些阶段也纳入数据完整性检查；
+- 内部 worker/core 范围与 job 数组增加显式边界检查；`raw.csv` 写入错误现在会中止而不是静默继续；
+- `profile.ini` 超过 64 KiB 或读取失败时拒绝作为有效快照；缺失参数返回空值，不再伪造 `unknown`；
+- 编译启用 `-Werror`；Linux CI 新增 AddressSanitizer + UndefinedBehaviorSanitizer 的 self-test 与 smoke gate；
+- CI 对 JSON/CSV 的线程、事件、字节、时间、数值、affinity 和重复次数做更严格交叉校验；
+- self-test 从 60 项增加到 **65 项**，新增 turnaround 逻辑字节/方向切换事件计数及缺失 profile key 行为测试。
+
+## Copy 专项测试
 
 1. **Copy baseline + Read/Write 对照**：测 `Copy-NT`、`Cached Copy`、独立 Read、独立 Write，并对 Copy 做 1/2/4/8/最大线程扩展。
 2. **10 档 turnaround sweep**：固定 50/50 总读写字节，只改变连续读/写分组：64B、128B、256B、512B、1KiB、2KiB、4KiB、8KiB、16KiB、64KiB。按 `elapsed/logical_bytes` 对 `events/logical_bytes` 做回归，给出有效 `ns/transition`、R² 和配对 MAD。
@@ -34,7 +48,7 @@ Windows x64 原生 **Copy 短板分析器**。当前版本 **2.2.0**，引擎 `A
 
 ## 当前参数来源仍是占位
 
-**2.2.0 还没有实现类似 ZenTimings 的硬件实读。** `profile.ini` 只作为临时参数快照展示，诊断评分完全来自实测，不读取 `profile.ini` 数值来决定谁是短板。
+**2.2.1 还没有实现类似 ZenTimings 的硬件实读。** `profile.ini` 只作为临时参数快照展示，诊断评分完全来自实测，不读取 `profile.ini` 数值来决定谁是短板。
 
 后续硬件读取层应提供实际 MCLK/UCLK/FCLK、UMC timings、GDM/Nitro/Refresh Mode、PMIC/相关电压，并在 JSON 中明确标记来源为硬件实读。
 
@@ -65,7 +79,9 @@ Copy 的 `GB/s` 默认按读取+写入两个方向的逻辑字节计数；报告
 `.github/workflows/build-release.yml` 会：
 
 - Ubuntu 24.04 + Clang/LLD 构建 Linux 验证程序与 Windows x64 EXE；
-- Linux 和 Windows runner 都执行 **60 项 self-test** 和 smoke workflow；
+- 编译器警告按错误处理；
+- Linux 额外执行 ASan + UBSan self-test / smoke；
+- Linux 和 Windows runner 都执行 **65 项 self-test** 和普通 smoke workflow；
 - 校验 Schema 4、10 档 turnaround、Copy loaded-latency、Copy-loaded short-window probe、CSV/JSON/HTML 一致性；
 - 两端都通过后发布正式 GitHub Release（非 Pre-release），附件为 ZIP、`BUILD_INFO.txt`、`SHA256SUMS.txt`。
 
