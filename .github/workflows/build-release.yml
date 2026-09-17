@@ -42,6 +42,20 @@ jobs:
           clang --version
           lld-link --version
           python3 -u source/build_builds.py 2>&1 | tee ci-validation/build.log
+      - name: Run Linux sanitizer gate
+        run: |
+          clang -std=c11 -O1 -g -fno-omit-frame-pointer \
+            -fsanitize=address,undefined -fno-sanitize-recover=all \
+            -Wall -Wextra -Wpedantic -Werror -Wno-overlength-strings -pthread \
+            source/src/main.c source/src/platform.c source/src/util.c source/src/kernels.c \
+            source/src/bench.c source/src/diagnostic.c source/src/selftest.c source/src/report.c \
+            -lm -o source/build/am5lab-linux-sanitize
+          ASAN_OPTIONS=detect_leaks=1:halt_on_error=1 UBSAN_OPTIONS=halt_on_error=1 \
+            source/build/am5lab-linux-sanitize --self-test 2>&1 | tee ci-validation/linux-sanitizer-selftest.log
+          ASAN_OPTIONS=detect_leaks=1:halt_on_error=1 UBSAN_OPTIONS=halt_on_error=1 \
+            source/build/am5lab-linux-sanitize --smoke --threads 2 --no-open \
+            --config profile.ini --out ci-validation/sanitizer-smoke 2>&1 | tee ci-validation/linux-sanitizer-smoke.log
+          python3 scripts/verify_smoke.py ci-validation/sanitizer-smoke --platform Linux
       - name: Run Linux self-tests and smoke test
         run: |
           source/build/am5lab-linux --self-test 2>&1 | tee ci-validation/linux-selftest.log
@@ -172,7 +186,8 @@ jobs:
 
           - 源码提交：${GITHUB_SHA}
           - 构建与测试记录：${RUN_URL}
-          - 已通过 Linux 和 Windows 运行环境的 60 项内核自检及小工作集端到端检查。
+          - 已通过 Linux 和 Windows 运行环境的 65 项内核/计算自检及小工作集端到端检查。
+          - Linux CI 额外通过 AddressSanitizer + UndefinedBehaviorSanitizer 的 self-test 与 smoke gate。
           - 下载 AM5MemoryLab-Windows-x64.zip，完整解压后运行 START.cmd。
           - SHA256SUMS.txt 用于校验下载文件；BUILD_INFO.txt 记录源码和编译器信息。
 

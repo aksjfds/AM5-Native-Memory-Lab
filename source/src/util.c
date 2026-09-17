@@ -1,4 +1,5 @@
 #include "lab.h"
+
 static void reserve(Text* t,size_t extra){if(extra>64*MIB||t->len>64*MIB-extra)die("Report size limit exceeded.");size_t need=t->len+extra+1;if(need<=t->cap)return;size_t cap=t->cap?t->cap:1024;while(cap<need)cap*=2;char *p=realloc(t->data,cap);if(!p)die("Out of memory building report.");t->data=p;t->cap=cap;}
 void text_init(Text* t){memset(t,0,sizeof(*t));reserve(t,1);t->data[0]=0;}
 void text_free(Text* t){free(t->data);memset(t,0,sizeof(*t));}
@@ -24,9 +25,10 @@ void die(const char* s){printf("\nERROR: %s\nNo BIOS or voltage settings were ch
 uint64_t rng_next(uint64_t* state){uint64_t z=(*state+=0x9e3779b97f4a7c15ULL);z=(z^(z>>30))*0xbf58476d1ce4e5b9ULL;z=(z^(z>>27))*0x94d049bb133111ebULL;return z^(z>>31);}
 static char* trim(char* s){while(*s==' '||*s=='\t'||*s=='\r')s++;size_t n=strlen(s);while(n&&(s[n-1]==' '||s[n-1]=='\t'||s[n-1]=='\r'))s[--n]=0;return s;}
 void profile_load(Profile* p,const char* path){memset(p,0,sizeof(*p));fmt(p->path,sizeof(p->path),"%s",path);FILE* f=file_open(path,"rb");if(!f)return;
-    char *buf=calloc(65537,1);if(!buf){fclose(f);return;}size_t n=fread(buf,1,65536,f);fclose(f);buf[n]=0;char *line=buf;
+    char *buf=calloc(65538,1);if(!buf){fclose(f);return;}size_t n=fread(buf,1,65537,f);int close_rc=fclose(f);
+    if(close_rc!=0||n>65536){free(buf);return;}buf[n]=0;char *line=buf;
     if(n>=3&&(unsigned char)buf[0]==0xef&&(unsigned char)buf[1]==0xbb&&(unsigned char)buf[2]==0xbf)line+=3;
-    while(*line&&p->n<MAX_PROFILE){char* end=strchr(line,'\n');if(end)*end=0;char *s=trim(line);if(*s&&*s!='#'&&*s!=';'&&*s!='['){char* eq=strchr(s,'=');if(eq){*eq=0;char*k=trim(s),*v=trim(eq+1);if(strlen(k)<64&&strlen(v)<192){bool found=false;for(size_t i=0;i<p->n;i++)if(!strcmp(p->kv[i].key,k)){fmt(p->kv[i].value,sizeof(p->kv[i].value),"%s",v);found=true;break;}if(!found){fmt(p->kv[p->n].key,64,"%s",k);fmt(p->kv[p->n].value,192,"%s",v);p->n++;}}}}if(!end)break;line=end+1;}
+    while(*line&&p->n<MAX_PROFILE){char* end=strchr(line,'\n');if(end)*end=0;char *s=trim(line);if(*s&&*s!='#'&&*s!=';'&&*s!='['){char* eq=strchr(s,'=');if(eq){*eq=0;char*k=trim(s),*v=trim(eq+1);if(strlen(k)<sizeof(p->kv[0].key)&&strlen(v)<sizeof(p->kv[0].value)){bool found=false;for(size_t i=0;i<p->n;i++)if(!strcmp(p->kv[i].key,k)){fmt(p->kv[i].value,sizeof(p->kv[i].value),"%s",v);found=true;break;}if(!found){fmt(p->kv[p->n].key,sizeof(p->kv[p->n].key),"%s",k);fmt(p->kv[p->n].value,sizeof(p->kv[p->n].value),"%s",v);p->n++;}}}}if(!end)break;line=end+1;}
     p->loaded=true;free(buf);
 }
-const char* profile_get(const Profile* p,const char* key){for(size_t i=0;i<p->n;i++)if(!strcmp(p->kv[i].key,key))return p->kv[i].value;return "unknown";}
+const char* profile_get(const Profile* p,const char* key){for(size_t i=0;i<p->n;i++)if(!strcmp(p->kv[i].key,key))return p->kv[i].value;return NULL;}
