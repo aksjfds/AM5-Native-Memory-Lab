@@ -8,7 +8,7 @@ import math
 from collections import Counter
 from pathlib import Path
 
-ENGINE = "AM5-Native-2.2.1-COPY-AVX2"
+ENGINE = "AM5-Native-2.2.2-COPY-GROUPS-AVX2"
 SELFTESTS = 65
 TURNAROUND_PATTERNS = [64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 65536]
 CSV_NINE_DECIMAL_ABS = 5.1e-10
@@ -37,6 +37,7 @@ def main() -> None:
 
     require(data["schema"] == "AM5Native/4", "Unexpected report schema")
     require(data.get("focus") == "copy_bottleneck", "Wrong analysis focus")
+    require(data.get("diagnostic_scope") == "parameter_group_only", "Wrong diagnostic scope")
     require(data["engine"] == ENGINE, "Unexpected engine id")
     require(data["platform"].startswith(args.platform), "Wrong executable platform")
     require(data["complete"] is True, "Benchmark did not complete")
@@ -139,9 +140,10 @@ def main() -> None:
                     f"CSV/JSON {json_key} mismatch: {label}")
 
     html = report.with_name("report.html").read_text(encoding="utf-8")
-    require("__DATA__" not in html and "AM5Native/4" in html and ENGINE in html and "Copy 短板排名" in html,
-            "HTML report did not embed the expected v4 data")
-    print(f"PASS: {args.platform}; {SELFTESTS} self-tests; {len(samples)} smoke samples; Copy v4 JSON/CSV/HTML verified.")
+    require("__DATA__" not in html and "AM5Native/4" in html and ENGINE in html and
+            '"diagnostic_scope":"parameter_group_only"' in html and "Copy 短板排名" in html,
+            "HTML report did not embed the expected group-only v4 data")
+    print(f"PASS: {args.platform}; {SELFTESTS} self-tests; {len(samples)} smoke samples; Copy group-only v4 JSON/CSV/HTML verified.")
     print("Functional CI checks only: not a performance reference or overclock stability certificate.")
 
 
