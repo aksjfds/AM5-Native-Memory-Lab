@@ -1,8 +1,20 @@
 #include "lab.h"
 #include "report_template.h"
 static void write_text(const char* name,const Text* t){FILE* f=file_open(name,"wb");if(!f)die("Cannot create report; check output folder permissions.");if(fwrite(t->data,1,t->len,f)!=t->len){fclose(f);die("Incomplete report write.");}fclose(f);}
+static const char* diagnostic_group_label(const char* id){
+    if(!strcmp(id,"copy_turnaround"))return "读写转向参数组";
+    if(!strcmp(id,"copy_write_path"))return "写入数据路径参数组";
+    if(!strcmp(id,"copy_read_path"))return "读取数据路径参数组";
+    if(!strcmp(id,"copy_scaling"))return "全局数据路径参数组（上下文）";
+    if(!strcmp(id,"copy_queue_pressure"))return "IMC排队/调度参数组（上下文）";
+    if(!strcmp(id,"copy_bank_parallel_proxy"))return "Bank激活/并行参数组（待Bank映射确认）";
+    if(!strcmp(id,"copy_row_proxy"))return "Row周期参数组（待Bank/Row映射确认）";
+    if(!strcmp(id,"copy_tail"))return "刷新/尾延迟参数组（待硬件计数器确认）";
+    if(!strcmp(id,"copy_store_policy"))return "CPU写策略上下文（非DRAM参数组）";
+    return "未分类参数组";
+}
 void report_write(const Report* r){
-    Text j;text_init(&j);text_add(&j,"{\n\"schema\":\"AM5Native/4\",\"focus\":\"copy_bottleneck\",\"engine\":\"" ENGINE_ID "\",\"platform\":");
+    Text j;text_init(&j);text_add(&j,"{\n\"schema\":\"AM5Native/4\",\"focus\":\"copy_bottleneck\",\"diagnostic_scope\":\"parameter_group_only\",\"engine\":\"" ENGINE_ID "\",\"platform\":");
 #ifdef _WIN32
     json_str(&j,"Windows x86-64 / native Win32");
 #else
@@ -16,7 +28,7 @@ void report_write(const Report* r){
     for(int i=0;i<r->opt.threads;i++){if(i)text_add(&j,",");text_fmt(&j,"{\"group\":%u,\"cpu\":%u}",r->hw.cores[i].group,r->hw.cores[i].cpu);}text_add(&j,"]},");
     text_fmt(&j,"\"integrity\":{\"errors\":%.0f,\"checked_bytes\":%.0f},\"whea\":{\"count\":%d,\"status\":",(double)r->integrity_errors,(double)r->integrity_checked_bytes,r->whea);json_str(&j,r->whea_status);text_add(&j,"},");
     text_fmt(&j,"\"parameter_source\":\"%s\",\"profile_loaded\":%s,\"profile\":{",r->profile.loaded?"profile.ini placeholder":"none",r->profile.loaded?"true":"false");for(size_t i=0;i<r->profile.n;i++){if(i)text_add(&j,",");json_str(&j,r->profile.kv[i].key);text_add(&j,":");json_str(&j,r->profile.kv[i].value);}text_add(&j,"},\n\"diagnostics\":[\n");
-    for(size_t i=0;i<r->ndiagnostics;i++){const Diagnostic* d=&r->diagnostics[i];if(i)text_add(&j,",\n");text_add(&j,"{\"id\":");json_str(&j,d->id);text_add(&j,",\"title\":");json_str(&j,d->title);text_add(&j,",\"parameter_group\":");json_str(&j,d->parameter_group);text_add(&j,",\"status\":");json_str(&j,d->status);text_add(&j,",\"confidence\":");json_str(&j,d->confidence);text_add(&j,",\"evidence\":");json_str(&j,d->evidence);text_add(&j,",\"limitation\":");json_str(&j,d->limitation);text_fmt(&j,",\"score\":%.9g,\"effect_pct\":%.9g,\"noise_pct\":%.9g,\"fit\":%.9g,\"estimate_ns\":%.9g}",d->score,d->effect_pct,d->noise_pct,d->fit,d->estimate_ns);}text_add(&j,"\n],\n\"samples\":[\n");
+    for(size_t i=0;i<r->ndiagnostics;i++){const Diagnostic* d=&r->diagnostics[i];if(i)text_add(&j,",\n");text_add(&j,"{\"id\":");json_str(&j,d->id);text_add(&j,",\"title\":");json_str(&j,d->title);text_add(&j,",\"parameter_group\":");json_str(&j,diagnostic_group_label(d->id));text_add(&j,",\"status\":");json_str(&j,d->status);text_add(&j,",\"confidence\":");json_str(&j,d->confidence);text_add(&j,",\"evidence\":");json_str(&j,d->evidence);text_add(&j,",\"limitation\":");json_str(&j,d->limitation);text_fmt(&j,",\"score\":%.9g,\"effect_pct\":%.9g,\"noise_pct\":%.9g,\"fit\":%.9g,\"estimate_ns\":%.9g}",d->score,d->effect_pct,d->noise_pct,d->fit,d->estimate_ns);}text_add(&j,"\n],\n\"samples\":[\n");
     for(size_t i=0;i<r->nsamples;i++){const Sample* x=&r->samples[i];if(i)text_add(&j,",\n");text_add(&j,"{\"suite\":");json_str(&j,x->suite);text_add(&j,",\"test\":");json_str(&j,x->test);text_add(&j,",\"unit\":");json_str(&j,x->unit);
         text_fmt(&j,",\"trial\":%d,\"threads\":%d,\"chains\":%d,\"working_bytes\":%.0f,\"pattern_bytes\":%.0f,\"operations\":%.0f,\"events\":%.0f,\"logical_bytes\":%.0f,\"elapsed\":%.12g,\"value\":%.12g,\"p50\":%.12g,\"p95\":%.12g,\"p99\":%.12g,\"p999\":%.12g,\"max\":%.12g,\"background_gbps\":%.12g,\"pin_ok\":%s,\"errors\":%.0f}",x->trial,x->threads,x->chains,(double)x->working_bytes,(double)x->pattern_bytes,(double)x->operations,(double)x->events,(double)x->logical_bytes,x->elapsed,x->value,x->p50,x->p95,x->p99,x->p999,x->max_value,x->background_gbps,x->pin_ok?"true":"false",(double)x->errors);
     }text_add(&j,"\n]}\n");char path[2400];fmt(path,sizeof(path),"%s/results.json",r->outdir);write_text(path,&j);
