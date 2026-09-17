@@ -1,46 +1,46 @@
-# AM5 Native Memory Lab 2.1.0
+# AM5 Native Memory Lab 2.2.0 — Copy 短板分析器
 
-Windows x64 原生内存实测与路径级参数诊断工具。程序使用 C11/AVX2 直接执行真实内存访问、依赖指针追逐、读写方向切换扫描和短窗口尾延迟探针，然后生成离线中文 HTML 报告。
+这是一个 Windows x64 原生内存微基准，当前版本将目标收窄为：**找出当前配置下最可能限制 Copy 性能的访问路径和参数组。**
 
-## 运行
+## 使用
 
-完整解压 Release 中的 `AM5MemoryLab-Windows-x64.zip`，运行 `START.cmd`。`QUICK.cmd` 使用较短采样；`SELFTEST.cmd` 只执行程序内部的 60 项内核/数学自检。默认完整测试每个负载 5 轮、单次约 500 ms。
+解压 Release 中的 `AM5MemoryLab-Windows-x64.zip`，运行：
 
-程序不需要 Python、编译器或第三方运行库，不修改 BIOS、电压、注册表或 Windows 安全设置，不联网，也不需要管理员权限。程序未进行代码签名；如果 Windows 给出安全提示，不要为了运行它而关闭 Defender、SmartScreen 或其他系统防护。
+- `START.cmd`：完整测试；
+- `QUICK.cmd`：较短测试；
+- `SELFTEST.cmd`：只执行 60 项内核/计算自检。
 
-## 2.1.0 的定位方式
+程序不会修改 BIOS、电压、Secure Boot、Defender 或其他系统设置。
 
-旧版报告主要把访问模式与若干 BIOS 参数组做固定关联，无法根据本轮结果判断哪个路径真正值得优先调整。2.1.0 改为使用本轮实测差分生成诊断：
+## 参数读取状态
 
-- **读写方向切换扫描**：总读/写字节保持 50/50，只把连续读→连续写的分组从 64 B 扫到 64 KiB。每轮根据实际方向切换事件数与实际耗时做回归，报告有效 `ns/transition`、R²、重复样本噪声和优先级。
-- **混合负载对照**：同线程数下比较纯读与 50/50 混合读写对随机依赖延迟的影响，作为 turnaround / IMC 排队的辅助证据。
-- **独立请求链**：1/2/4/8 条独立随机链用于观察并发请求重叠效率。没有 Bank 映射时只把 tRRD/tFAW/SCL 列为候选组，不单项定责。
-- **短窗口尾延迟探针**：每个窗口只执行 64 次依赖读取，记录 P50/P95/P99/P99.9/Max，避免 8192 次访问窗口把短 stall 过度平均。
-- **自动诊断对象**：`results.json` 中新增 `diagnostics`，包含路径状态、分数、候选参数组、证据、置信度和归因边界。没有足够证据时会明确输出 `no_evidence` 或 `unresolved`，不会把所有时序都列成“需要优化”。
+当前仍使用 `profile.ini` 作为临时参数快照。它不是 BIOS/UMC 实时读回，且**不参与短板评分**。后续会单独实现类似 ZenTimings 的实际参数读取层。
 
-## 仍然不能直接定责的部分
+## 诊断逻辑
 
-2.1.0 仍没有内核级 DRAM 地址映射和 AMD UMC/IBS 硬件计数器，因此：
+程序首先测 Copy-NT、Cached Copy、独立 Read、独立 Write，并对 Copy 做线程扩展；然后执行 10 档读写方向切换扫描、Copy 背景 loaded latency、Copy 背景短窗口 tail probe，以及 Bank/Row 代理测试。
 
-- 页内随机与全范围随机的差异会同时包含 TLB、地址局部性、预取和可能的 DRAM 行局部性；在获得物理地址→Channel/BankGroup/Bank/Row 映射前，不把它自动归因给 tRP/tRCDRD/tRC。
-- 短窗口尾延迟能证明存在 stall，但没有 Refresh 计数器和周期相关性时，不把它自动认定为 tRFC/tREFI 问题。
-- 单次配置无法知道“把 tRP 48 改成 44”会提升多少或是否稳定。精确单项效果仍需要真正改变设置后做 A/B。
+只有具备可识别证据的路径才进入 Copy 短板排名：
 
-## 关于 profile.ini
+- turnaround → `tRDWR / tWRRD / tWTRS / tWTRL`；
+- 写侧压力 → `tWRWRSCL / tWRWRSC-SD-DD / tCWL`；
+- 读侧压力 → `tRDRDSCL / tRDRDSC-SD-DD`。
 
-**当前版本仍未读取 BIOS/UMC 实际生效时序。** `profile.ini` 只用于显示用户声明的频率、时序和电压，并进行理论 ns 换算；它不参与路径优先级评分，也不会影响实测结果。实际时序/电压读回是独立的下一阶段硬件访问功能。
+没有 Bank/Row 映射时，`tRRD/tFAW` 和 `tRP/tRCD/tRC` 只保留为 unresolved；没有 UMC refresh counter 时，尾延迟也不会被直接称为 `tRFC/tREFI` 问题。
 
-## 输出
+`priority` / `watch` 表示“在本轮 Copy workload 中值得优先检查”，不是稳定性结论。具体某个时序能否减 1 cycle、实际能提升多少，最终仍要改 BIOS 后做 A/B。
 
-每次运行会在 `results/YYYYMMDD_HHMMSS_PID/` 生成：
+## 数据口径
 
-- `report.html`：离线中文报告和自动路径优先级。
-- `results.json`：机器信息、所有原始样本、诊断对象和声明配置。
-- `raw.csv`：逐样本原始数据，包含 `pattern_bytes`、方向切换 `events`、P99.9 和 Max 等新增字段。
-- `whea-events.xml`：仅在测试窗口观察到 WHEA 事件时生成。
+Copy 总逻辑带宽按 `read bytes + write bytes` 计数；有效复制数据率为总逻辑带宽的一半。Read/Write 独立带宽不是 Copy 的严格物理上限，只用于判断哪个方向更接近自身独立能力边界。
 
-Copy 吞吐使用“读+写逻辑字节”计数，因此与只计算有效复制数据量的软件数值口径不同。Cached Write 的 RFO、写回和协议流量没有 UMC 总线计数器，不把逻辑 GB/s 宣称为物理 DRAM 总线流量。
+Turnaround sweep 固定总读写量和 50/50 比例，只改变连续读写分组：64B → 64KiB，并用事件密度和单位字节耗时回归评估有效切换成本。
 
-## 稳定性边界
+## 输出文件
 
-程序会做数据模式、写入/复制回读、内核自检和运行窗口 WHEA 查询，但它不是完整的 DRAM 稳定性证明。它不会覆盖全部可用内存、所有数据模式、温度循环、冷启动训练或长时间游戏负载。
+- `report.html`
+- `results.json` (`AM5Native/4`)
+- `raw.csv`
+- 可选 `whea-events.xml`
+
+本工具的 Copy workload 不等价于 AIDA64 Copy，也不声称复现 AIDA64 的内部实现。
