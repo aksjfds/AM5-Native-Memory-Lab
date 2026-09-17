@@ -16,12 +16,12 @@
 #define NOINLINE __attribute__((noinline))
 #define AVX2 __attribute__((target("avx2"),noinline))
 #define MAX_CORES 128
-#define MAX_RESULTS 6000
+#define MAX_RESULTS 8000
 #define MAX_PROFILE 96
-#define MAX_DIAGNOSTICS 12
+#define MAX_DIAGNOSTICS 16
 #define MIB ((size_t)1048576)
-#define VERSION "2.1.0"
-#define ENGINE_ID "AM5-Native-2.1.0-AVX2"
+#define VERSION "2.2.0"
+#define ENGINE_ID "AM5-Native-2.2.0-COPY-AVX2"
 typedef struct {char *data;size_t len,cap;} Text;
 void text_init(Text*);
 void text_free(Text*);
@@ -101,7 +101,7 @@ typedef struct {
 } Sample;
 typedef struct {int repeats;double seconds;size_t memory;int threads;bool quick,smoke,no_open,selftest;char out[1024],config[1024];} Options;
 typedef struct {
-    char id[40],title[96],parameter_group[192],status[32],confidence[16],evidence[512],limitation[384];
+    char id[40],title[96],parameter_group[192],status[32],confidence[16],evidence[640],limitation[448];
     double score,effect_pct,noise_pct,fit,estimate_ns;
 } Diagnostic;
 typedef struct {
