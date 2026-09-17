@@ -20,8 +20,8 @@
 #define MAX_PROFILE 96
 #define MAX_DIAGNOSTICS 16
 #define MIB ((size_t)1048576)
-#define VERSION "2.2.1"
-#define ENGINE_ID "AM5-Native-2.2.1-COPY-AVX2"
+#define VERSION "2.2.2"
+#define ENGINE_ID "AM5-Native-2.2.2-COPY-GROUPS-AVX2"
 typedef struct {char *data;size_t len,cap;} Text;
 void text_init(Text*);
 void text_free(Text*);
