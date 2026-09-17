@@ -115,75 +115,43 @@ static Sample loaded_stall_copy(Report* r,Chain* c,uint8_t* a,uint8_t* b,size_t 
 void record_sample(Report* r,const Sample* x){
     if(r->nsamples>=MAX_RESULTS)die("Result limit exceeded.");r->samples[r->nsamples++]=*x;
     char path[2400];fmt(path,sizeof(path),"%s/raw.csv",r->outdir);FILE* f=file_open(path,r->nsamples==1?"wb":"ab");if(!f)die("Cannot write raw.csv; extract the program to a writable folder.");
-    if(r->nsamples==1)fprintf(f,"suite,test,trial,threads,chains,working_bytes,pattern_bytes,operations,events,logical_bytes,elapsed_s,value,unit,batch_p50_ns,batch_p95_ns,batch_p99_ns,batch_p999_ns,batch_max_ns,background_GBps,affinity_ok,errors\n");
-    fprintf(f,"%s,%s,%d,%d,%d,%.0f,%.0f,%.0f,%.0f,%.0f,%.9f,%.9f,%s,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%d,%.0f\n",x->suite,x->test,x->trial,x->threads,x->chains,(double)x->working_bytes,(double)x->pattern_bytes,(double)x->operations,(double)x->events,(double)x->logical_bytes,x->elapsed,x->value,x->unit,x->p50,x->p95,x->p99,x->p999,x->max_value,x->background_gbps,x->pin_ok,(double)x->errors);
-    bool failed=ferror(f)!=0;if(fclose(f)!=0)failed=true;if(failed)die("Failed while writing raw.csv.");
+    int header_rc=0;if(r->nsamples==1)header_rc=fprintf(f,"suite,test,trial,threads,chains,working_bytes,pattern_bytes,operations,events,logical_bytes,elapsed_s,value,unit,batch_p50_ns,batch_p95_ns,batch_p99_ns,batch_p999_ns,batch_max_ns,background_GBps,affinity_ok,errors\n");
+    int row_rc=fprintf(f,"%s,%s,%d,%d,%d,%.0f,%.0f,%.0f,%.0f,%.0f,%.9f,%.9f,%s,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%d,%.0f\n",x->suite,x->test,x->trial,x->threads,x->chains,(double)x->working_bytes,(double)x->pattern_bytes,(double)x->operations,(double)x->events,(double)x->logical_bytes,x->elapsed,x->value,x->unit,x->p50,x->p95,x->p99,x->p999,x->max_value,x->background_gbps,x->pin_ok,(double)x->errors);
+    int close_rc=fclose(f);if(header_rc<0||row_rc<0||close_rc!=0)die("Failed while writing raw.csv.");
     printf("  %-18s %-24s t=%d run=%d %9.3f %-9s%s\n",x->suite,x->test,x->threads,x->trial,x->value,x->unit,x->errors?" DATA MISMATCH":"");fflush(0);
 }
 
 static void permute_int(int* a,int n,uint64_t* seed){for(int i=n;i>1;i--){int j=(int)(rng_next(seed)%(unsigned)i),tmp=a[i-1];a[i-1]=a[j];a[j]=tmp;}}
 static bool job_exists(const Job* jobs,int n,Kernel k,int t){for(int i=0;i<n;i++)if(jobs[i].k==k&&jobs[i].t==t)return true;return false;}
-static void add_job(Job* jobs,int* n,size_t cap,Kernel k,int t){
-    if(t<=0||job_exists(jobs,*n,k,t))return;
-    if((size_t)*n>=cap)die("Internal job list overflow.");jobs[(*n)++]=(Job){k,t};
-}
+static void add_job(Job* jobs,int* n,size_t cap,Kernel k,int t){if(t<=0||job_exists(jobs,*n,k,t))return;if((size_t)*n>=cap)die("Internal job list overflow.");jobs[(*n)++]=(Job){k,t};}
 
 void suite_run(Report* r){
     const size_t n=r->opt.memory;int nt=r->opt.threads;uint64_t seed=0x947b29378ULL;double started=now_sec();pin_core(r->hw.cores[0]);
-    printf("\n[1/7] Allocate and pre-fault arrays; full-buffer integrity checks\n");fflush(0);
-    uint8_t* a=pages_alloc(n),*b=pages_alloc(n);
+    printf("\n[1/7] Allocate and pre-fault arrays; full-buffer integrity checks\n");fflush(0);uint8_t* a=pages_alloc(n),*b=pages_alloc(n);
     for(unsigned pass=0;pass<2&&!atomic_load(&cancelled);pass++){uint64_t sd=pass?0xf02acbb16ULL:0x34867127ULL;fill_pattern(a,n,sd);r->integrity_errors+=verify_pattern(a,n,sd);r->integrity_checked_bytes+=n;}
-    fill_pattern(a,n,0x12345987ULL);memset(b,0,n);
-    if(r->integrity_errors){printf("Data errors detected before benchmarks. Copy diagnosis will be suppressed.\n");atomic_store(&cancelled,true);}
+    fill_pattern(a,n,0x12345987ULL);memset(b,0,n);if(r->integrity_errors){printf("Data errors detected before benchmarks. Copy diagnosis will be suppressed.\n");atomic_store(&cancelled,true);}
 
-    printf("\n[2/7] Copy baseline, isolated read/write references, and Copy thread scaling\n");fflush(0);
-    Job jobs[32];int nj=0;int counts[5]={1,2,4,8,nt};
-    for(int i=0;i<5;i++)if(counts[i]<=nt)add_job(jobs,&nj,sizeof(jobs)/sizeof(jobs[0]),K_COPY_NT,counts[i]);
-    add_job(jobs,&nj,sizeof(jobs)/sizeof(jobs[0]),K_READ,1);add_job(jobs,&nj,sizeof(jobs)/sizeof(jobs[0]),K_READ,nt);
-    add_job(jobs,&nj,sizeof(jobs)/sizeof(jobs[0]),K_WRITE_NT,1);add_job(jobs,&nj,sizeof(jobs)/sizeof(jobs[0]),K_WRITE_NT,nt);add_job(jobs,&nj,sizeof(jobs)/sizeof(jobs[0]),K_COPY_CACHED,nt);
-    for(int rep=1;rep<=r->opt.repeats&&!atomic_load(&cancelled);rep++){
-        int order[32];for(int i=0;i<nj;i++)order[i]=i;permute_int(order,nj,&seed);
-        for(int j=0;j<nj&&!atomic_load(&cancelled);j++){Job x=jobs[order[j]];Sample s=bandwidth(r,a,b,n,x.k,x.t,"copy_baseline",rep);record_sample(r,&s);if(s.errors)atomic_store(&cancelled,true);}
-    }
+    printf("\n[2/7] Copy baseline, isolated read/write references, and Copy thread scaling\n");fflush(0);Job jobs[32];int nj=0;int counts[5]={1,2,4,8,nt};
+    for(int i=0;i<5;i++)if(counts[i]<=nt)add_job(jobs,&nj,sizeof(jobs)/sizeof(jobs[0]),K_COPY_NT,counts[i]);add_job(jobs,&nj,sizeof(jobs)/sizeof(jobs[0]),K_READ,1);add_job(jobs,&nj,sizeof(jobs)/sizeof(jobs[0]),K_READ,nt);add_job(jobs,&nj,sizeof(jobs)/sizeof(jobs[0]),K_WRITE_NT,1);add_job(jobs,&nj,sizeof(jobs)/sizeof(jobs[0]),K_WRITE_NT,nt);add_job(jobs,&nj,sizeof(jobs)/sizeof(jobs[0]),K_COPY_CACHED,nt);
+    for(int rep=1;rep<=r->opt.repeats&&!atomic_load(&cancelled);rep++){int order[32];for(int i=0;i<nj;i++)order[i]=i;permute_int(order,nj,&seed);for(int j=0;j<nj&&!atomic_load(&cancelled);j++){Job x=jobs[order[j]];Sample s=bandwidth(r,a,b,n,x.k,x.t,"copy_baseline",rep);record_sample(r,&s);if(s.errors)atomic_store(&cancelled,true);}}
     report_write(r);
 
-    printf("\n[3/7] Copy-relevant read/write turnaround sweep (fixed 50/50 bytes)\n");fflush(0);
-    const size_t groups[10]={64,128,256,512,1024,2048,4096,8192,16384,65536};
-    for(int rep=1;rep<=r->opt.repeats&&!atomic_load(&cancelled);rep++){
-        int order[10]={0,1,2,3,4,5,6,7,8,9};permute_int(order,10,&seed);
-        for(int j=0;j<10&&!atomic_load(&cancelled);j++){size_t g=groups[order[j]];char name[64];fmt(name,sizeof(name),"rw_group_%lluB",(unsigned long long)g);Sample s=bandwidth_ex(r,a,b,n,K_TURN_SWEEP,nt,"copy_turnaround",name,rep,g);record_sample(r,&s);if(s.errors)atomic_store(&cancelled,true);}
-    }
+    printf("\n[3/7] Copy-relevant read/write turnaround sweep (fixed 50/50 bytes)\n");fflush(0);const size_t groups[10]={64,128,256,512,1024,2048,4096,8192,16384,65536};
+    for(int rep=1;rep<=r->opt.repeats&&!atomic_load(&cancelled);rep++){int order[10]={0,1,2,3,4,5,6,7,8,9};permute_int(order,10,&seed);for(int j=0;j<10&&!atomic_load(&cancelled);j++){size_t g=groups[order[j]];char name[64];fmt(name,sizeof(name),"rw_group_%lluB",(unsigned long long)g);Sample s=bandwidth_ex(r,a,b,n,K_TURN_SWEEP,nt,"copy_turnaround",name,rep,g);record_sample(r,&s);if(s.errors)atomic_store(&cancelled,true);}}
     report_write(r);
 
-    printf("\n[4/7] Address/parallelism proxies used only when they can support Copy diagnosis\n");fflush(0);
-    uint8_t* cp=pages_alloc(n);int modes[5]={0,1,0,0,0};unsigned chains[5]={1,1,2,4,8};const char* names[5]={"random_latency","page_local_latency","parallel_2_chains","parallel_4_chains","parallel_8_chains"};
+    printf("\n[4/7] Address/parallelism proxies used only when they can support Copy diagnosis\n");fflush(0);uint8_t* cp=pages_alloc(n);int modes[5]={0,1,0,0,0};unsigned chains[5]={1,1,2,4,8};const char* names[5]={"random_latency","page_local_latency","parallel_2_chains","parallel_4_chains","parallel_8_chains"};
     for(int idx=0;idx<5&&!atomic_load(&cancelled);idx++){Chain c;chain_build(&c,cp,n,chains[idx],modes[idx],0x719ff02);for(int rep=1;rep<=r->opt.repeats&&!atomic_load(&cancelled);rep++){Sample s=latency_measure(r,&c,"copy_path_proxy",names[idx],rep,0);record_sample(r,&s);}}
     report_write(r);
 
-    printf("\n[5/7] Idle short-window stall distribution (refresh/tail reference only)\n");fflush(0);
-    if(!atomic_load(&cancelled)){Chain c;chain_build(&c,cp,n,1,0,0x3190ab27);for(int rep=1;rep<=r->opt.repeats&&!atomic_load(&cancelled);rep++){Sample s=stall_probe_measure(r,&c,"copy_stall_probe","idle_short_window",rep,0);record_sample(r,&s);}}
+    printf("\n[5/7] Idle short-window stall distribution (refresh/tail reference only)\n");fflush(0);if(!atomic_load(&cancelled)){Chain c;chain_build(&c,cp,n,1,0,0x3190ab27);for(int rep=1;rep<=r->opt.repeats&&!atomic_load(&cancelled);rep++){Sample s=stall_probe_measure(r,&c,"copy_stall_probe","idle_short_window",rep,0);record_sample(r,&s);}}
     report_write(r);
 
-    printf("\n[6/7] Random latency under read, mixed, and Copy background traffic\n");fflush(0);
-    if(!atomic_load(&cancelled)){
-        Chain c;chain_build(&c,cp,n,1,0,0x719ff02);int bg=nt>1?nt-1:0;Job loaded_jobs[12];int nl=0;loaded_jobs[nl++]=(Job){K_READ,0};
-        if(bg>0){
-            add_job(loaded_jobs,&nl,sizeof(loaded_jobs)/sizeof(loaded_jobs[0]),K_READ,bg);add_job(loaded_jobs,&nl,sizeof(loaded_jobs)/sizeof(loaded_jobs[0]),K_MIX50,bg);
-            int copy_counts[4]={1,2,4,bg};for(int i=0;i<4;i++)if(copy_counts[i]<=bg)add_job(loaded_jobs,&nl,sizeof(loaded_jobs)/sizeof(loaded_jobs[0]),K_COPY_NT,copy_counts[i]);
-        }
-        for(int rep=1;rep<=r->opt.repeats&&!atomic_load(&cancelled);rep++){
-            int order[12];for(int i=0;i<nl;i++)order[i]=i;permute_int(order,nl,&seed);
-            for(int j=0;j<nl&&!atomic_load(&cancelled);j++){Job job=loaded_jobs[order[j]];Sample s=loaded(r,&c,a,b,n,job.k,job.t,rep);record_sample(r,&s);if(s.errors)atomic_store(&cancelled,true);}
-        }
-    }
+    printf("\n[6/7] Random latency under read, mixed, and Copy background traffic\n");fflush(0);if(!atomic_load(&cancelled)){Chain c;chain_build(&c,cp,n,1,0,0x719ff02);int bg=nt>1?nt-1:0;Job loaded_jobs[12];int nl=0;loaded_jobs[nl++]=(Job){K_READ,0};if(bg>0){add_job(loaded_jobs,&nl,sizeof(loaded_jobs)/sizeof(loaded_jobs[0]),K_READ,bg);add_job(loaded_jobs,&nl,sizeof(loaded_jobs)/sizeof(loaded_jobs[0]),K_MIX50,bg);int copy_counts[4]={1,2,4,bg};for(int i=0;i<4;i++)if(copy_counts[i]<=bg)add_job(loaded_jobs,&nl,sizeof(loaded_jobs)/sizeof(loaded_jobs[0]),K_COPY_NT,copy_counts[i]);}
+        for(int rep=1;rep<=r->opt.repeats&&!atomic_load(&cancelled);rep++){int order[12];for(int i=0;i<nl;i++)order[i]=i;permute_int(order,nl,&seed);for(int j=0;j<nl&&!atomic_load(&cancelled);j++){Job job=loaded_jobs[order[j]];Sample s=loaded(r,&c,a,b,n,job.k,job.t,rep);record_sample(r,&s);if(s.errors)atomic_store(&cancelled,true);}}}
     report_write(r);
 
-    printf("\n[7/7] Short-window tail probe while Copy traffic is active\n");fflush(0);
-    if(!atomic_load(&cancelled)){
-        Chain c;chain_build(&c,cp,n,1,0,0x4d12a991);int bg=nt>1?nt-1:0;
-        if(bg>0)for(int rep=1;rep<=r->opt.repeats&&!atomic_load(&cancelled);rep++){Sample s=loaded_stall_copy(r,&c,a,b,n,bg,rep);record_sample(r,&s);if(s.errors)atomic_store(&cancelled,true);}
-    }
+    printf("\n[7/7] Short-window tail probe while Copy traffic is active\n");fflush(0);if(!atomic_load(&cancelled)){Chain c;chain_build(&c,cp,n,1,0,0x4d12a991);int bg=nt>1?nt-1:0;if(bg>0)for(int rep=1;rep<=r->opt.repeats&&!atomic_load(&cancelled);rep++){Sample s=loaded_stall_copy(r,&c,a,b,n,bg,rep);record_sample(r,&s);if(s.errors)atomic_store(&cancelled,true);}}
     if(!atomic_load(&cancelled)){r->integrity_errors+=verify_pattern(a,n,0x12345987ULL);r->integrity_checked_bytes+=n;}
-    pages_free(cp,n);pages_free(a,n);pages_free(b,n);
-    r->elapsed=now_sec()-started;r->complete=!atomic_load(&cancelled)&&!r->integrity_errors;diagnostics_build(r);report_write(r);
+    pages_free(cp,n);pages_free(a,n);pages_free(b,n);r->elapsed=now_sec()-started;r->complete=!atomic_load(&cancelled)&&!r->integrity_errors;diagnostics_build(r);report_write(r);
 }
