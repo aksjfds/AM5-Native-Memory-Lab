@@ -11,6 +11,8 @@ from pathlib import Path
 ENGINE = "AM5-Native-2.2.1-COPY-AVX2"
 SELFTESTS = 65
 TURNAROUND_PATTERNS = [64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 65536]
+CSV_NINE_DECIMAL_ABS = 5.1e-10
+CSV_SIX_DECIMAL_ABS = 5.1e-7
 
 
 def require(condition: bool, message: str) -> None:
@@ -124,9 +126,17 @@ def main() -> None:
         require(row["unit"] == sample["unit"], f"CSV/JSON unit mismatch: {label}")
         require(int(row["affinity_ok"]) == int(sample["pin_ok"]), f"CSV/JSON affinity mismatch: {label}")
         require(int(row["errors"]) == int(sample["errors"]), f"CSV/JSON errors mismatch: {label}")
-        require(close(float(row["elapsed_s"]), sample["elapsed"]), f"CSV/JSON elapsed mismatch: {label}")
-        require(close(float(row["value"]), sample["value"]), f"CSV/JSON value mismatch: {label}")
-        require(close(float(row["background_GBps"]), sample["background_gbps"]), f"CSV/JSON background mismatch: {label}")
+        require(close(float(row["elapsed_s"]), sample["elapsed"], abs_=CSV_NINE_DECIMAL_ABS),
+                f"CSV/JSON elapsed mismatch: {label}")
+        require(close(float(row["value"]), sample["value"], abs_=CSV_NINE_DECIMAL_ABS),
+                f"CSV/JSON value mismatch: {label}")
+        require(close(float(row["background_GBps"]), sample["background_gbps"], abs_=CSV_SIX_DECIMAL_ABS),
+                f"CSV/JSON background mismatch: {label}")
+        for csv_key, json_key in (("batch_p50_ns", "p50"), ("batch_p95_ns", "p95"),
+                                  ("batch_p99_ns", "p99"), ("batch_p999_ns", "p999"),
+                                  ("batch_max_ns", "max")):
+            require(close(float(row[csv_key]), sample[json_key], abs_=CSV_SIX_DECIMAL_ABS),
+                    f"CSV/JSON {json_key} mismatch: {label}")
 
     html = report.with_name("report.html").read_text(encoding="utf-8")
     require("__DATA__" not in html and "AM5Native/4" in html and ENGINE in html and "Copy 短板排名" in html,
